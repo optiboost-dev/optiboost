@@ -1,0 +1,29 @@
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+}
+
+.nav-button:hover {
+    -fx-background-color: white;
+    -fx-cursor: pointer;
+}
+
+.nav-selected {
+    -fx-border-color: #005fb8;
+    -fx-border-width: 0 0 0 3px;
+
+}
+
+.nav-selected Label {
+    -fx-text-fill: #005fb8;
+}
+
+.close-button:hover {
+    -fx-background-color: #E74C3C;
+    -fx-cursor: pointer;
+}
+
+.minimize-button:hover {
+    -fx-background-color: white;
+    -fx-cursor: pointer;
+}
