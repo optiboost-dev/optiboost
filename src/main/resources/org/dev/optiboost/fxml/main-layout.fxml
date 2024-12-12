@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Pane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.MainController" stylesheets="@../styles/main.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.MainController" stylesheets="@../styles/main.css">
 
     <!-- 顶部操作栏 -->
     <top>

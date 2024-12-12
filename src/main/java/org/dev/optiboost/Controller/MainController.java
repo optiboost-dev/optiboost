@@ -1,4 +1,4 @@
-package org.dev.optiboost;
+package org.dev.optiboost.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class MainController {
         // 允许拖动窗口
         topBar.setOnMousePressed(this::handleMousePressed);
         topBar.setOnMouseDragged(this::handleMouseDragged);
-        loadScreen("fxml/memory-clean.fxml");
+        loadScreen("/org/dev/optiboost/fxml/memory-clean.fxml");
         setNavigationIndex(1);
     }
 
@@ -88,24 +88,24 @@ public class MainController {
     private void changeIcon(int index){
         switch (navigationIndex){
             case 1:
-                navIcon1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/MemoryCleanIcon.png"))));
+                navIcon1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/MemoryCleanIcon.png"))));
                 break;
             case 2:
-                navIcon2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/DiskCleanIcon.png"))));
+                navIcon2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/DiskCleanIcon.png"))));
                 break;
             case 3:
-                navIcon3.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/MonitorIcon.png"))));
+                navIcon3.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/MonitorIcon.png"))));
                 break;
         }
         switch(index){
             case 1:
-                navIcon1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/MemoryCleanIconSelected.png"))));
+                navIcon1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/MemoryCleanIconSelected.png"))));
                 break;
             case 2:
-                navIcon2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/DiskCleanIconSelected.png"))));
+                navIcon2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/DiskCleanIconSelected.png"))));
                 break;
             case 3:
-                navIcon3.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/MonitorIconSelected.png"))));
+                navIcon3.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/dev/optiboost/assets/MonitorIconSelected.png"))));
                 break;
         }
     }
@@ -138,20 +138,20 @@ public class MainController {
     protected void loadMemoryCleanPage(ActionEvent event) {
         if(navigationIndex == 1) return;
         setNavigationIndex(1);
-        loadScreen("fxml/memory-clean.fxml");
+        loadScreen("/org/dev/optiboost/fxml/memory-clean.fxml");
     }
 
     @FXML
     protected void loadDiskCleanPage(ActionEvent event) {
         if(navigationIndex == 2) return;
         setNavigationIndex(2);
-        loadScreen("fxml/disk-clean.fxml");
+        loadScreen("/org/dev/optiboost/fxml/disk-clean.fxml");
     }
 
     @FXML
     protected void loadMonitorPage(ActionEvent event) {
         if(navigationIndex == 3) return;
         setNavigationIndex(3);
-        loadScreen("fxml/monitor.fxml");
+        loadScreen("/org/dev/optiboost/fxml/monitor.fxml");
     }
 }

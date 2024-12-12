@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.MemoryCleanController">
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.MemoryCleanController">
     <Label text="内存清理" style="-fx-font-size: 18px;"/>
 </VBox>
 

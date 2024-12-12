@@ -1,4 +1,4 @@
-package org.dev.optiboost;
+package org.dev.optiboost.Controller;
 
 public class MemoryCleanController {
 }
