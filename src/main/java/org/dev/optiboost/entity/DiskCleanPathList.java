@@ -8,6 +8,15 @@ import java.util.regex.Pattern;
 public class DiskCleanPathList {
     static String username = System.getProperty("user.name");
 
+//    重要命令：
+//    # 查询 64 位应用程序的安装位置
+//Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*' |
+//Select-Object DisplayName, DisplayVersion, InstallLocation
+//
+//# 查询 32 位应用程序的安装位置
+//Get-ItemProperty -Path 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' |
+//Select-Object DisplayName, DisplayVersion, InstallLocation
+
     static DiskPathNode deliveryOptimizationNode = new DiskPathNode("传递优化文件",
             new String[]{
                     "C:/Windows/SoftwareDistribution/DeliveryOptimization",
@@ -68,7 +77,7 @@ public class DiskCleanPathList {
     );
 
     public static String getEdgeDownloadPath() {
-        String edgeDownloadPreference = "C:\\Users\\33091\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Preferences";
+        String edgeDownloadPreference = "C:\\Users\\"+username+"\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Preferences";
         // 读取整个文件内容
         StringBuilder content = new StringBuilder();
 
@@ -82,7 +91,8 @@ public class DiskCleanPathList {
             Pattern pattern = Pattern.compile("\"download\"\\s*:\\s*\\{\\s*\"default_directory\"\\s*:\\s*\"([^\"]+)\"");
             Matcher matcher = pattern.matcher(content.toString());
             if (matcher.find()) {
-                return matcher.group(1); // 返回下载路径
+//                把\\换成/
+                return matcher.group(1).replaceAll("\\\\\\\\", "/");
             }
         } catch (IOException e) {
             e.printStackTrace();
