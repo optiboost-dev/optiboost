@@ -1,7 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.DiskCleanController">
-    <Label text="磁盘清理" style="-fx-font-size: 18px;"/>
-</VBox>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.DiskCleanController"
+            stylesheets="@../styles/disk-clean.css" fitToHeight="true" fitToWidth="true">
+    <VBox alignment="TOP_CENTER" spacing="5">
+        <Label text="系统存储空间管理"
+               style="-fx-pref-width: 320px; -fx-max-width: 320px; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 15px 0 10px 0"/>
+        <VBox styleClass="DiskUsageContainer" alignment="TOP_CENTER">
+            <VBox spacing="10" alignment="CENTER" fx:id="diskUsageContainer"/>
+        </VBox>
+        <!-- 磁盘清理分类 -->
+        <Label text="磁盘清理"
+               styleClass="SubTitle"/>
+
+        <!-- 清理按钮区域 -->
+        <VBox alignment="CENTER" spacing="5" style="-fx-pref-width: 300px;">
+            <VBox.margin>
+                <Insets left="30" right="30"/>
+            </VBox.margin>
+            <!-- 文件清理按钮 -->
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10">
+                <ImageView fitHeight="25" fitWidth="25">
+                    <Image url="@../assets/DownloadFileIcon.png"/>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="下载文件" styleClass="Title" />
+                    <Label text="扫描电脑中的下载文件" styleClass="Description"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10">
+                <ImageView fitHeight="25" fitWidth="25">
+                    <Image url="@../assets/LargeFileIcon.png"/>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="大文件" styleClass="Title" />
+                    <Label text="扫描电脑中的大文件" styleClass="Description"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10" fx:id="DiskCleanSystemCleanBtn">
+                <ImageView fitHeight="25" fitWidth="25">
+                    <Image url="@../assets/SystemCleanIcon.png"/>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="系统清理" styleClass="Title"/>
+                    <Label text="使用系统工具清理电脑" styleClass="Description"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+
+        <!-- 应用清理分类 -->
+        <Label text="应用清理" styleClass="SubTitle"/>
+
+        <!-- 应用清理按钮 -->
+        <VBox alignment="CENTER" spacing="5" style="-fx-pref-width: 300px;">
+            <VBox.margin>
+                <Insets left="30" right="30"/>
+            </VBox.margin>
+
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10">
+                <ImageView fitHeight="25" fitWidth="25">
+                    <Image url="@../assets/ApplicationCleanIcon.png"/>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="应用清理" styleClass="Title" />
+                    <Label text="扫描电脑中的所有应用" styleClass="Description"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>
+

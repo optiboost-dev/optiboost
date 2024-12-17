@@ -1,0 +1,84 @@
+ScrollPane {
+    -fx-vbar-policy: never; /* 禁止显示垂直滚动条 */
+    -fx-hbar-policy: never; /* 禁止显示水平滚动条 */
+    -fx-background-color: #f3f9fe; /* 设置背景为透明 */
+}
+
+.DiskCleanContainer {
+    -fx-max-height: 100%; /* 使 VBox 的高度自适应父元素 */
+    -fx-pref-height: 100%;
+}
+
+/*.DiskUsageContainer{*/
+/*    -fx-padding: 10 0 10 0px;*/
+/*    -fx-background-color: white;*/
+/*    -fx-border-color: #e0e0e0;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-radius: 5px;*/
+/*    -fx-pref-width: 360px;*/
+/*    -fx-max-width: 360px;*/
+/*}*/
+
+/* 通过设置 ScrollPane 内容区域的溢出处理，隐藏滚动条 */
+ScrollPane .viewport {
+    -fx-background-color: transparent; /* 可选：设置背景为透明 */
+}
+
+ScrollPane .scroll-bar {
+    -fx-opacity: 0; /* 隐藏滚动条 */
+}
+
+ScrollPane:focused {
+    -fx-focus-color: transparent; /* 隐藏焦点框 */
+    -fx-faint-focus-color: transparent;
+}
+
+.progress-bar {
+    -fx-pref-width: 320px;
+    -fx-pref-height: 10px; /* 设置整体高度 */
+    -fx-background-color: #e0e0e0; /* 进度条背景颜色 */
+    -fx-border-width: 0;
+    -fx-border-radius: 10px; /* 边框圆角 */
+    -fx-background-radius: 10px; /* 背景圆角 */
+    -fx-padding: 0; /* 移除内边距，使背景和 bar 高度一致 */
+}
+
+/* 设置进度条填充部分的样式 */
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #4caf50, #2196f3); /* 渐变填充颜色 */
+    -fx-background-radius: 10px; /* 进度条内部圆角 */
+    -fx-padding: 0; /* 移除填充，确保与背景高度一致 */
+}
+
+
+.DiskCleanBtn {
+    -fx-pref-height: 70px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px 10px 20px;
+    -fx-cursor: hand;
+}
+
+.DiskCleanBtn:hover {
+    -fx-background-color: #fafafa;
+}
+
+.DiskCleanBtn .Title {
+    -fx-font-size: 16px
+}
+
+.DiskCleanBtn .Description {
+    -fx-font-size: 12px;
+    -fx-text-fill: #aaaaaa
+}
+
+.SubTitle {
+    fx-pref-width: 320px;
+    -fx-max-width: 320px;
+    -fx-font-size: 15px;
+    -fx-font-weight: normal;
+    -fx-padding: 15px 0 10px 0
+}

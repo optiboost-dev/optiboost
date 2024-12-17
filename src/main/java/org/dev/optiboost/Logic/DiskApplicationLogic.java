@@ -5,18 +5,17 @@ import org.dev.optiboost.entity.DiskApplicationNode;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class DiskApplicationLogic {
-    List<DiskApplicationNode> diskApplicationNodeList = new ArrayList<>();
+    private List<DiskApplicationNode> diskApplicationNodeList;
     private final ExecutorService executorService = Executors.newFixedThreadPool(10); // 使用线程池
 
     public DiskApplicationLogic() {
+        diskApplicationNodeList = new ArrayList<>();
         scanApplications();
+        updateApplicationsSize();
     }
 
     private void scanApplications() {
@@ -89,6 +88,11 @@ public class DiskApplicationLogic {
         return String.join(":", t1).trim();
     }
 
+    public static void main(String[] args) {
+        DiskApplicationLogic logic = new DiskApplicationLogic();
+        logic.getDiskApplicationNodeListWithOption("name", new String[]{"Windows", "Intel"}).forEach(System.out::println);
+    }
+
     private void executeCommand(String command) {
         try {
             ProcessBuilder pb = new ProcessBuilder(command.split(" "));
@@ -134,8 +138,15 @@ public class DiskApplicationLogic {
             if (exitCode != 0) {
                 System.err.println("Command exited with error code: " + exitCode);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
+        }
+    }
+
+
+    public void displayApplications() {
+        for (DiskApplicationNode node : diskApplicationNodeList) {
+            System.out.println(node);
         }
     }
 
@@ -147,19 +158,11 @@ public class DiskApplicationLogic {
                 double sizeInKB = Double.parseDouble(value);
                 return sizeInKB / 1024.0; // 转换为 MB
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
 
         }
         return 0.0;
     }
-
-
-    public void displayApplications() {
-        for (DiskApplicationNode node : diskApplicationNodeList) {
-            System.out.println(node);
-        }
-    }
-
 
     public void updateApplicationsSize() {
         List<Future<Double>> futures = new ArrayList<>();
@@ -171,21 +174,46 @@ public class DiskApplicationLogic {
         // 等待所有任务完成并更新节点的大小
         for (int i = 0; i < futures.size(); i++) {
             try {
-                Double size = futures.get(i).get(); // 获取异步计算结果
+                Double size = futures.get(i).get(30, TimeUnit.SECONDS); // 30秒超时
                 DiskApplicationNode node = diskApplicationNodeList.get(i);
                 if(size!=0.0&&node.getInstallLocation().isEmpty()){
                     node.setInstallLocation(node.getUninstallString().substring(0,node.getUninstallString().lastIndexOf("\\")));
                 }
                 node.setEstimatedSize(size);
-            } catch (InterruptedException | ExecutionException ignored) {
+            } catch (InterruptedException | ExecutionException | TimeoutException ignored) {
 
             }
         }
+        executorService.shutdown();
     }
 
-    public static void main(String[] args) {
-        DiskApplicationLogic logic = new DiskApplicationLogic();
-        logic.updateApplicationsSize();
-        logic.displayApplications();
+    public List<DiskApplicationNode> getDiskApplicationNodeList() {
+        return diskApplicationNodeList;
+    }
+
+    public List<DiskApplicationNode> getDiskApplicationNodeListWithOption(String option, String[] filter) {
+        if (Objects.equals(option, "size")) {
+            diskApplicationNodeList.sort((o1, o2) -> {
+                if (o1.getEstimatedSize() > o2.getEstimatedSize()) {
+                    return -1;
+                } else if (o1.getEstimatedSize() < o2.getEstimatedSize()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        } else if (Objects.equals(option, "name")) {
+            diskApplicationNodeList.sort(Comparator.comparing(DiskApplicationNode::getDisplayName));
+        }
+        if (filter.length == 0) {
+            return diskApplicationNodeList;
+        }
+        List<DiskApplicationNode> result = new ArrayList<>();
+        for (DiskApplicationNode node : diskApplicationNodeList) {
+            if (Arrays.stream(filter).noneMatch(node.getDisplayName()::contains)) {
+                result.add(node);
+            }
+        }
+        return result;
     }
 }
