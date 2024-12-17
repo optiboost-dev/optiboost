@@ -11,41 +11,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Pane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.MainController" stylesheets="@../styles/main.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.MainController" stylesheets="@../styles/main.css" style="-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #f0f0f0; -fx-border-width: 1px;">
 
     <!-- 顶部操作栏 -->
     <top>
-        <HBox fx:id="topBar" alignment="CENTER_RIGHT" style="-fx-background-color: #e6f3fd; -fx-pref-height: 40px;">
-            <padding>
-                <Insets left="10"/>
-            </padding>
-            <!-- 添加 optiBoost 文字作为 Icon -->
-            <Label text="OptiBoost" style="-fx-font-size: 16px; -fx-text-fill: #005fb8; -fx-font-weight: bold;"/>
-
-            <!-- 占位符，用于将按钮推到右侧 -->
-            <Pane HBox.hgrow="ALWAYS"/>
-            <StackPane fx:id="minimizeButtonContainer" styleClass="minimize-button" prefHeight="40" prefWidth="40" alignment="CENTER">
-                <ImageView fx:id="minimizeButton" fitWidth="20" fitHeight="20">
-                    <image>
-                        <Image url="@../assets/MinimizeButtonIcon.png"/>
-                    </image>
-                </ImageView>
-            </StackPane>
-
-            <StackPane fx:id="closeButtonContainer" styleClass="close-button" prefHeight="40" prefWidth="40" alignment="CENTER">
-                <ImageView fx:id="closeButton" fitWidth="20" fitHeight="20">
-                    <image>
-                        <Image url="@../assets/CloseButtonIcon.png"/>
-                    </image>
-                </ImageView>
-            </StackPane>
-        </HBox>
+        <fx:include source="common/top_bar.fxml" />
     </top>
 
     <!-- 左侧导航栏 -->
     <left>
-        <VBox fx:id="navBar" alignment="TOP_RIGHT" style="-fx-background-color: #e6f3fd;" spacing="5">
-
+        <VBox fx:id="navBar" alignment="TOP_RIGHT" style="-fx-background-color: #e6f3fd; -fx-background-radius: 0 0 0 10px;" spacing="5">
             <Button fx:id="memoryCleanButton" onAction="#loadMemoryCleanPage" styleClass="nav-button">
                 <graphic>
                     <VBox spacing="5" alignment="CENTER">
@@ -59,8 +34,6 @@
                     </VBox>
                 </graphic>
             </Button>
-
-
             <Button fx:id="diskCleanButton" onAction="#loadDiskCleanPage" styleClass="nav-button">
                 <graphic>
                     <VBox spacing="5" alignment="CENTER">
@@ -74,7 +47,6 @@
                     </VBox>
                 </graphic>
             </Button>
-
             <Button fx:id="monitorButton" onAction="#loadMonitorPage" styleClass="nav-button">
                 <graphic>
                     <VBox spacing="5" alignment="CENTER">
@@ -93,7 +65,7 @@
 
     <!-- 右侧主要内容区域，用于加载不同的页面 -->
     <center>
-        <StackPane fx:id="content" style="-fx-background-color: #ffffff;"/>
+        <StackPane fx:id="content" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 10px 0"/>
     </center>
 
 </BorderPane>

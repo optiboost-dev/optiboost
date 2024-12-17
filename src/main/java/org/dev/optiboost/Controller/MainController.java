@@ -29,50 +29,12 @@ public class MainController {
     @FXML
     public ImageView navIcon1, navIcon2, navIcon3;
 
-    @FXML
-    public StackPane minimizeButtonContainer, closeButtonContainer;
-
-    @FXML
-    private ImageView minimizeButton, closeButton;
-
-    @FXML
-    private HBox topBar;
-
-    private double offsetX, offsetY;
-
     private int navigationIndex;
 
     @FXML
     public void initialize() {
-        // 最小化按钮功能
-        minimizeButtonContainer.setOnMouseClicked(e -> {
-            Stage stage = (Stage) minimizeButton.getScene().getWindow();
-            stage.setIconified(true);
-        });
-
-        // 关闭按钮功能
-        closeButtonContainer.setOnMouseClicked(e -> {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.close();
-        });
-
-        // 允许拖动窗口
-        topBar.setOnMousePressed(this::handleMousePressed);
-        topBar.setOnMouseDragged(this::handleMouseDragged);
         loadScreen("/org/dev/optiboost/fxml/memory-clean.fxml");
         setNavigationIndex(1);
-    }
-
-    private void handleMousePressed(MouseEvent event) {
-        Stage stage = (Stage) topBar.getScene().getWindow();
-        offsetX = event.getSceneX();
-        offsetY = event.getSceneY();
-    }
-
-    private void handleMouseDragged(MouseEvent event) {
-        Stage stage = (Stage) topBar.getScene().getWindow();
-        stage.setX(event.getScreenX() - offsetX);
-        stage.setY(event.getScreenY() - offsetY);
     }
 
     private void loadScreen(String fxmlFile) {

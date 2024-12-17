@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.DiskCleanController"
-            stylesheets="@../styles/disk-clean.css" fitToHeight="true" fitToWidth="true">
+            stylesheets="@../styles/disk-clean.css" fitToHeight="true" fitToWidth="true" style="-fx-background-radius: 0 0 10px 0">
     <VBox alignment="TOP_CENTER" spacing="5">
         <Label text="系统存储空间管理"
                style="-fx-pref-width: 320px; -fx-max-width: 320px; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 15px 0 10px 0"/>
@@ -62,7 +62,7 @@
                 <Insets left="30" right="30"/>
             </VBox.margin>
 
-            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10">
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10" fx:id="DiskCleanApplicationCleanBtn">
                 <ImageView fitHeight="25" fitWidth="25">
                     <Image url="@../assets/ApplicationCleanIcon.png"/>
                 </ImageView>

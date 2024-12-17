@@ -1,11 +1,12 @@
 .nav-button {
     -fx-background-color: transparent;
     -fx-text-fill: #000000;
+    -fx-cursor: hand;
 }
 
 .nav-button:hover {
     -fx-background-color: white;
-    -fx-cursor: pointer;
+
 }
 
 .nav-selected {
@@ -18,12 +19,20 @@
     -fx-text-fill: #005fb8;
 }
 
+.close-button {
+    -fx-cursor: hand;
+    -fx-background-radius: 0 10px 0 0;
+}
+
+.minimize-button {
+    -fx-cursor: hand;
+}
+
 .close-button:hover {
     -fx-background-color: #E74C3C;
-    -fx-cursor: pointer;
+
 }
 
 .minimize-button:hover {
     -fx-background-color: white;
-    -fx-cursor: pointer;
 }

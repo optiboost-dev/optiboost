@@ -2,7 +2,9 @@ package org.dev.optiboost.Controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
@@ -10,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.dev.optiboost.Logic.DiskUsageLogic;
 import org.dev.optiboost.entity.DiskUsageNode;
 
@@ -21,6 +24,9 @@ public class DiskCleanController {
     public VBox diskUsageContainer;
     @FXML
     public HBox DiskCleanSystemCleanBtn;
+
+    @FXML
+    public HBox DiskCleanApplicationCleanBtn;
 
     DiskUsageLogic diskUsageLogic;
 
@@ -43,6 +49,23 @@ public class DiskCleanController {
                             "无法启动磁盘清理工具: " + e.getMessage()
                     ).showAndWait();
                 });
+            }
+        });
+
+        DiskCleanApplicationCleanBtn.setOnMouseClicked(event -> {
+            try{
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/dev/optiboost/fxml/disk-clean-application.fxml"));
+                Parent root = fxmlLoader.load();
+
+                Stage newStage = new Stage();
+                newStage.initStyle(StageStyle.TRANSPARENT);
+                newStage.setTitle("应用程序清理");
+                newStage.setScene(new javafx.scene.Scene(root, 800, 600));
+
+                newStage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
