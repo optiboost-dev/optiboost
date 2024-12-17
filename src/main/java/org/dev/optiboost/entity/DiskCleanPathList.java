@@ -11,11 +11,11 @@ public class DiskCleanPathList {
 //    重要命令：
 //    # 查询 64 位应用程序的安装位置
 //Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*' |
-//Select-Object DisplayName, DisplayVersion, InstallLocation
+//Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString
 //
 //# 查询 32 位应用程序的安装位置
 //Get-ItemProperty -Path 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' |
-//Select-Object DisplayName, DisplayVersion, InstallLocation
+//Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString
 
     static DiskPathNode deliveryOptimizationNode = new DiskPathNode("传递优化文件",
             new String[]{
