@@ -19,7 +19,7 @@ public class DiskCleanPathList {
 
     static DiskPathNode deliveryOptimizationNode = new DiskPathNode("传递优化文件",
             new String[]{
-                    "C:/Windows/SoftwareDistribution/DeliveryOptimization",
+//                    "C:/Windows/SoftwareDistribution/DeliveryOptimization",
                     "C:/Windows/SoftwareDistribution/DataStore",
                     "C:/Windows/SoftwareDistribution/Download"
             }
@@ -76,6 +76,19 @@ public class DiskCleanPathList {
             }
     );
 
+    static DiskPathNode chromeDownloadNode = new DiskPathNode("Chrome 浏览器下载",
+            new String[]{
+                    getChromeDownloadPath()
+            }
+    );
+
+//    DefaultDownloadNode
+    static DiskPathNode defaultDownloadNode = new DiskPathNode("默认下载路径",
+            new String[]{
+                    "C:/Users/" + username + "/Downloads"
+            }
+    );
+
     public static String getEdgeDownloadPath() {
         String edgeDownloadPreference = "C:\\Users\\"+username+"\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Preferences";
         // 读取整个文件内容
@@ -101,7 +114,33 @@ public class DiskCleanPathList {
         return null; // 如果没有找到下载路径，返回null
     }
 
-    public static List<DiskPathNode> getCleanupPaths() {
+    public static String getChromeDownloadPath() {
+        String chromeDownloadPreference = "C:\\Users\\"+username+"\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Preferences";
+        // 读取整个文件内容
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(chromeDownloadPreference)))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line);
+            }
+
+            // 使用正则表达式匹配 "download":{"default_directory":"路径"
+            Pattern pattern = Pattern.compile("\"savefile\"\\s*:\\s*\\{\\s*\"default_directory\"\\s*:\\s*\"([^\"]+)\"");
+            Matcher matcher = pattern.matcher(content.toString());
+            if (matcher.find()) {
+//                把\\换成/
+                return matcher.group(1).replaceAll("\\\\\\\\", "/");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null; // 如果没有找到下载路径，返回null
+    }
+
+
+    public static List<DiskPathNode> getAllCleanupPaths() {
         return List.of(
                 deliveryOptimizationNode,
                 logsNode,
@@ -111,7 +150,23 @@ public class DiskCleanPathList {
                 inetCacheNode,
                 werNode,
                 recycleBinNode,
-                edgeDownloadNode
+                edgeDownloadNode,
+                chromeDownloadNode
+        );
+    }
+
+    public static List<DiskPathNode> getTempPaths() {
+        return List.of(
+                tempNode
+        );
+    }
+
+    public static List<DiskPathNode> getDownloadPaths() {
+        return List.of(
+                explorerNode,
+                edgeDownloadNode,
+                chromeDownloadNode,
+                defaultDownloadNode
         );
     }
 }
