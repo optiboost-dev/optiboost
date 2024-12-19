@@ -1,0 +1,8 @@
+.search-button{
+    -fx-pref-width: 60px;
+    -fx-pref-height: 30px;
+    -fx-background-color: #005fb8;
+    -fx-background-radius: 40px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}

@@ -6,10 +6,48 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.dev.optiboost.Controller.DiskCleanApplicationController"
-            prefHeight="600.0" prefWidth="800.0">
-    <Label text="Disk Clean Application" />
+            prefHeight="550.0" prefWidth="720.0"
+            fx:id="diskCleanApplicationContainer"
+            stylesheets="@../styles/common.css,@../styles/disk-clean-application.css">
+    <VBox spacing="10" prefWidth="720" prefHeight="550">
+        <!-- Dropdown for Sort by -->
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10px">
+            <HBox spacing="5" alignment="CENTER">
+                <Label text="筛选条件:"/>
+                <ComboBox fx:id="filterConditionComboBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
 
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            <HBox spacing="5" alignment="CENTER">
+                <Label text="排序依据："/>
+                <ComboBox fx:id="sortByComboBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="应用名称"/>
+                            <String fx:value="应用大小（从大到小）"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+<!--            输入框-->
+            <HBox spacing="5" alignment="CENTER">
+                <Label text="搜索："/>
+                <TextField fx:id="searchTextField" promptText="请输入关键词"/>
+            </HBox>
+            <!-- Dropdown for Filter Condition -->
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="searchButton" alignment="CENTER" text="搜索" styleClass="search-button"/>
+        </HBox>
+
+        <VBox fx:id="diskCleanApplicationMainPart" alignment="TOP_CENTER" />
+
+    </VBox>
 </ScrollPane>

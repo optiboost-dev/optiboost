@@ -1,5 +1,6 @@
 package org.dev.optiboost.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,13 +41,15 @@ public class DiskCleanInnerController {
     }
 
     private void loadScreen(String fxmlFile) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Node screen = loader.load();
-            content.getChildren().setAll(screen);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+                Node screen = loader.load();
+                Platform.runLater(() -> content.getChildren().setAll(screen));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void changeIcon(int index){
@@ -97,7 +100,9 @@ public class DiskCleanInnerController {
         if(navigationIndex == 2){
             return;
         }
+        System.out.println("start loadApplicationCleanPage");
         loadScreen("/org/dev/optiboost/fxml/disk-clean-application.fxml");
+        System.out.println("loaded ApplicationCleanPage");
         setNavigationIndex(2);
     }
 }

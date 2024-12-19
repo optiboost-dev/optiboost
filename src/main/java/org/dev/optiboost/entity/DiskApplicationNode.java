@@ -9,13 +9,16 @@ public class DiskApplicationNode {
     private String fileStorageString;
     private double estimatedSize; // 以 MB 为单位
 
-    public DiskApplicationNode(String displayName, String displayVersion, String installLocation, String uninstallString, String fileStorageString, double estimatedSize) {
+    private String publisher;
+
+    public DiskApplicationNode(String displayName, String displayVersion, String installLocation, String uninstallString, String fileStorageString, double estimatedSize, String publisher) {
         this.displayName = displayName;
         this.displayVersion = displayVersion;
         this.installLocation = installLocation;
         this.uninstallString = uninstallString;
         this.fileStorageString = fileStorageString;
         this.estimatedSize = estimatedSize;
+        this.publisher = publisher;
     }
     public String getDisplayName() {
         return displayName;
@@ -35,6 +38,10 @@ public class DiskApplicationNode {
 
     public String getFileStorageString() {
         return fileStorageString;
+    }
+
+    public String getPublisher() {
+        return publisher;
     }
 
     public void setDisplayName(String displayName) {
@@ -65,6 +72,10 @@ public class DiskApplicationNode {
         this.estimatedSize = estimatedSize;
     }
 
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public String toString() {
         return "DiskApplicationNode{" +
@@ -73,6 +84,7 @@ public class DiskApplicationNode {
                 ", installLocation='" + installLocation + '\'' +
                 ", uninstallString='" + uninstallString + '\'' +
                 ", estimatedSize=" + estimatedSize + " MB" +
+                ", publisher='" + publisher + '\'' +
                 '}';
     }
 }

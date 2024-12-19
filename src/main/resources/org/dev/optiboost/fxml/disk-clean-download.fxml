@@ -11,7 +11,7 @@
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.dev.optiboost.Controller.DiskCleanDownloadController"
-            prefHeight="600" prefWidth="800" style="-fx-background-radius: 0 0 10px 0;"
+            prefHeight="760" prefWidth="600" style="-fx-background-radius: 0 0 10px 0;"
             stylesheets="@../styles/common.css,@../styles/disk-clean-download.css">
     <VBox fx:id="fileListVBox" alignment="TOP_CENTER" style="-fx-padding: 50px"/>
 </ScrollPane>

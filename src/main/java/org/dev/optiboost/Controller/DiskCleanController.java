@@ -28,7 +28,7 @@ public class DiskCleanController {
     public VBox diskUsageContainer;
 
     @FXML
-    public HBox DiskCleanApplicationCleanBtn, DiskCleanDownloadBtn, DiskCleanSystemCleanBtn;
+    public HBox DiskCleanApplicationCleanBtn, DiskCleanDownloadBtn, DiskCleanSystemCleanBtn, DiskCleanLargeFileBtn;;
 
 
     @FXML
@@ -59,6 +59,16 @@ public class DiskCleanController {
 
         DiskCleanDownloadBtn.setOnMouseClicked(event -> {
             goToDiskCleanInnerPage("下载文件清理", "download");
+        });
+
+        DiskCleanLargeFileBtn.setOnMouseClicked(event -> {
+//            由于Java速度限制，此处暂不实现
+            Platform.runLater(() -> {
+                new javafx.scene.control.Alert(
+                        javafx.scene.control.Alert.AlertType.INFORMATION,
+                        "由于Java缺少快速查找方法，JNA相对麻烦，此功能暂不可用"
+                ).showAndWait();
+            });
         });
     }
 

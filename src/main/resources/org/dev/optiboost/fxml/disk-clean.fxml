@@ -32,7 +32,7 @@
                     <Label text="扫描电脑中的下载文件" styleClass="Description"/>
                 </VBox>
             </HBox>
-            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10">
+            <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10" fx:id="DiskCleanLargeFileBtn">
                 <ImageView fitHeight="25" fitWidth="25">
                     <Image url="@../assets/LargeFileIcon.png"/>
                 </ImageView>

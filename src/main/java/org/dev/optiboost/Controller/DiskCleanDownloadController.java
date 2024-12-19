@@ -39,7 +39,7 @@ public class DiskCleanDownloadController {
     private Map<HBox, Boolean> arrowStateMap = new HashMap<>();
     private Map<HBox, Boolean> isFileAllChecked = new HashMap<>();
 
-    private void populateTreeView(String option) {
+    private void populateTreeView() {
         // Clear previous file items
         fileListVBox.getChildren().clear();
 
@@ -51,7 +51,7 @@ public class DiskCleanDownloadController {
             CheckBox diskPathNodeCheckBox = new CheckBox();
             VBox fileVBox = getDetailedFileInNode(diskPathNode, diskPathNodeCheckBox);
             HBox diskPathNodeHBox = new HBox();  // Use HBox layout for each folder item
-            if(Objects.equals(option, "new")) isFileAllChecked.put(diskPathNodeHBox, false);
+            isFileAllChecked.put(diskPathNodeHBox, false);
             diskPathNodeHBox.setStyle("-fx-pref-width: 620px; -fx-padding: 10px ; -fx-pref-height: 60px ; -fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-border-radius: 2px; -fx-background-radius: 2px");
             diskPathNodeHBox.setAlignment(Pos.CENTER);
             // Parent checkbox action to toggle all child checkboxes
@@ -106,9 +106,20 @@ public class DiskCleanDownloadController {
         Button deleteButton = new Button("删除选中文件");
         deleteButton.setStyle("-fx-background-color: #005fb8; -fx-text-fill: white; -fx-pref-width: 300px; -fx-pref-height: 40px; -fx-font-size: 16px; -fx-border-radius: 50px; -fx-background-radius: 50px;");
         deleteButton.setOnAction(event -> {
-            DiskCleanLogic.cleanFileList(filesNeedToBeDelete);
-            getDownloadFileInfo();
-            populateTreeView("old");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("删除确认");
+            alert.setHeaderText("你确定要删除选中文件吗?");
+            alert.setContentText("删除后无法恢复");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                DiskCleanLogic.cleanFileList(filesNeedToBeDelete);
+                getDownloadFileInfo();
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("删除成功");
+                alert1.setHeaderText("文件删除成功");
+                alert1.showAndWait();
+                populateTreeView();
+            }
         });
         Region deleteButtonSpacer = new Region();
         deleteButtonSpacer.setStyle("-fx-pref-height: 20px");
@@ -186,6 +197,6 @@ public class DiskCleanDownloadController {
     public void initialize() {
         getDownloadFileInfo();
         filesNeedToBeDelete = new ArrayList<>();
-        populateTreeView("new");
+        populateTreeView();
     }
 }

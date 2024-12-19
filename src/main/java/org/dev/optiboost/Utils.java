@@ -20,4 +20,16 @@ public class Utils {
         DecimalFormat df = new DecimalFormat("#.##");
         return df.format(value);
     }
+
+    public static void runCommand(String uninstallString) {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(uninstallString.split(" "));
+            processBuilder.redirectErrorStream(true);
+            processBuilder.inheritIO();
+            Process process = processBuilder.start();
+            process.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

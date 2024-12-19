@@ -23,11 +23,11 @@ public class DiskApplicationLogic {
         String[] commands = {
                 "powershell.exe -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; " +
                         "Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' | " +
-                        "Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString, EstimatedSize | Format-List\"",
+                        "Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString, EstimatedSize, Publisher | Format-List\"",
 
                 "powershell.exe -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; " +
                         "Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' | " +
-                        "Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString, EstimatedSize | Format-List\""
+                        "Select-Object DisplayName, DisplayVersion, InstallLocation, UninstallString, EstimatedSize, Publisher | Format-List\""
         };
 
         for (String command : commands) {
@@ -47,7 +47,7 @@ public class DiskApplicationLogic {
         }
         if(path.isEmpty()) return 0.0;
         String command = "powershell.exe -Command \"$OutputEncoding = [System.Text.Encoding]::UTF8; " +
-                "(Get-ChildItem -Path '"+ path +"' -Recurse | Measure-Object -Property Length -Sum).Sum / 1MB; ";
+                "(Get-ChildItem -Path '"+ path +"' -Recurse | Measure-Object -Property Length -Sum).Sum; ";
 
         try {
             ProcessBuilder pb = new ProcessBuilder(command.split(" "));
@@ -90,7 +90,7 @@ public class DiskApplicationLogic {
 
     public static void main(String[] args) {
         DiskApplicationLogic logic = new DiskApplicationLogic();
-        logic.getDiskApplicationNodeListWithOption("name", new String[]{"Windows", "Intel"}).forEach(System.out::println);
+        logic.getDiskApplicationNodeListWithOption("name", "D:\\", "").forEach(System.out::println);
     }
 
     private void executeCommand(String command) {
@@ -105,12 +105,13 @@ public class DiskApplicationLogic {
             String displayVersion = "";
             String installLocation = "";
             String uninstallString = "";
+            String publisher = "";
             double estimatedSize = 0.0;
 
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("DisplayName")) {
                     if (!displayName.isEmpty()) {
-                        DiskApplicationNode node = new DiskApplicationNode(displayName, displayVersion, installLocation, uninstallString, "", estimatedSize);
+                        DiskApplicationNode node = new DiskApplicationNode(displayName, displayVersion, installLocation, uninstallString, "", estimatedSize, publisher);
                         diskApplicationNodeList.add(node);
                         // 重置所有字段
                         displayName = displayVersion = installLocation = uninstallString = "";
@@ -125,12 +126,14 @@ public class DiskApplicationLogic {
                     uninstallString = dealWithApplicationLine(line);
                 } else if (line.startsWith("EstimatedSize")) {
                     estimatedSize = parseEstimatedSize(line);
+                } else if (line.startsWith("Publisher")) {
+                    publisher = dealWithApplicationLine(line);
                 }
             }
 
             // 确保最后一个应用被添加
             if (!displayName.isEmpty()) {
-                DiskApplicationNode node = new DiskApplicationNode(displayName, displayVersion, installLocation, uninstallString, "", estimatedSize);
+                DiskApplicationNode node = new DiskApplicationNode(displayName, displayVersion, installLocation, uninstallString, "", estimatedSize, publisher);
                 diskApplicationNodeList.add(node);
             }
 
@@ -156,7 +159,7 @@ public class DiskApplicationLogic {
             String value = dealWithApplicationLine(line);
             if (!value.isEmpty()) {
                 double sizeInKB = Double.parseDouble(value);
-                return sizeInKB / 1024.0; // 转换为 MB
+                return sizeInKB*1024;
             }
         } catch (NumberFormatException ignored) {
 
@@ -191,7 +194,7 @@ public class DiskApplicationLogic {
         return diskApplicationNodeList;
     }
 
-    public List<DiskApplicationNode> getDiskApplicationNodeListWithOption(String option, String[] filter) {
+    public List<DiskApplicationNode> getDiskApplicationNodeListWithOption(String option, String diskFilter, String keyword) {
         if (Objects.equals(option, "size")) {
             diskApplicationNodeList.sort((o1, o2) -> {
                 if (o1.getEstimatedSize() > o2.getEstimatedSize()) {
@@ -205,15 +208,32 @@ public class DiskApplicationLogic {
         } else if (Objects.equals(option, "name")) {
             diskApplicationNodeList.sort(Comparator.comparing(DiskApplicationNode::getDisplayName));
         }
-        if (filter.length == 0) {
-            return diskApplicationNodeList;
-        }
         List<DiskApplicationNode> result = new ArrayList<>();
-        for (DiskApplicationNode node : diskApplicationNodeList) {
-            if (Arrays.stream(filter).noneMatch(node.getDisplayName()::contains)) {
-                result.add(node);
+        if(keyword.isEmpty()&&Objects.equals(diskFilter, "all")) {
+            return diskApplicationNodeList;
+        }else if(keyword.isEmpty()) {
+            for (DiskApplicationNode node : diskApplicationNodeList) {
+                if (node.getInstallLocation().contains(diskFilter)) {
+                    result.add(node);
+                }
+            }
+        }else if(Objects.equals(diskFilter, "all")) {
+            for (DiskApplicationNode node : diskApplicationNodeList) {
+                if (node.getDisplayName().contains(keyword)) {
+                    result.add(node);
+                }
+            }
+        }else{
+            for (DiskApplicationNode node : diskApplicationNodeList) {
+                if (node.getInstallLocation().contains(diskFilter) && node.getDisplayName().contains(keyword)) {
+                    result.add(node);
+                }
             }
         }
         return result;
+    }
+
+    public void removeOneItem(DiskApplicationNode diskApplicationNode) {
+        diskApplicationNodeList.remove(diskApplicationNode);
     }
 }

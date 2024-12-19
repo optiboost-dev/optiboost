@@ -3,6 +3,7 @@ package org.dev.optiboost.Logic;
 import org.dev.optiboost.entity.DiskUsageNode;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -44,6 +45,23 @@ public class DiskUsageLogic {
         return result;
     }
 
+    public static List<String> getAllDiskNames() {
+        List<String> diskNames = new ArrayList<>();
+
+        // Get the root directories (e.g., C:\, D:\, etc.)
+        File[] roots = File.listRoots();
+        if (roots != null) {
+            for (File root : roots) {
+                if (root.exists() && root.isDirectory()) {
+                    // Add the disk name (e.g., C:, D:, etc.)
+                    diskNames.add(root.getAbsolutePath());
+                }
+            }
+        }
+
+        return diskNames;
+    }
+
 
 
     public static List<DiskUsageNode> getDiskUsageNodes() {
@@ -55,7 +73,7 @@ public class DiskUsageLogic {
     }
 
     public static void main(String[] args) {
-        System.out.println(DiskUsageLogic.getDiskUsageSituation());
+        System.out.println(DiskUsageLogic.getAllDiskNames());
     }
 
 

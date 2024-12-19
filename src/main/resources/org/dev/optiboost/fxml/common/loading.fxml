@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10" alignment="CENTER" >
+
+    <!-- 加载指示器 -->
+    <ProgressIndicator fx:id="progressIndicator" />
+
+    <!-- 加载提示文字 -->
+    <Label fx:id="loadingLabel" text="加载中，请稍候..." style="-fx-font-size: 14px;" />
+</VBox>
