@@ -6,11 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.dev.optiboost.Controller.DiskCleanApplicationController">
-    <top>
-        <fx:include source="common/top_bar.fxml" />
-    </top>
+            fx:controller="org.dev.optiboost.Controller.DiskCleanApplicationController"
+            prefHeight="600.0" prefWidth="800.0">
+    <Label text="Disk Clean Application" />
 
-</BorderPane>
+</ScrollPane>

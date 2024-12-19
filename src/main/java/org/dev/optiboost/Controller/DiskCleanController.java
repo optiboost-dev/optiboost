@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
@@ -18,22 +19,22 @@ import org.dev.optiboost.entity.DiskUsageNode;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+
+import static org.dev.optiboost.Utils.formatDouble;
 
 public class DiskCleanController {
     @FXML
     public VBox diskUsageContainer;
-    @FXML
-    public HBox DiskCleanSystemCleanBtn;
 
     @FXML
-    public HBox DiskCleanApplicationCleanBtn;
+    public HBox DiskCleanApplicationCleanBtn, DiskCleanDownloadBtn, DiskCleanSystemCleanBtn;
 
-    DiskUsageLogic diskUsageLogic;
 
     @FXML
     public void initialize() {
-        diskUsageLogic = new DiskUsageLogic();
-        List<DiskUsageNode> diskUsageNodes = diskUsageLogic.getDiskUsageNodes();
+//        获取当前时间戳
+        List<DiskUsageNode> diskUsageNodes = DiskUsageLogic.getDiskUsageNodes();
         for (DiskUsageNode diskUsageNode : diskUsageNodes) {
             addDiskUsageToContainer(diskUsageNode);
         }
@@ -53,21 +54,33 @@ public class DiskCleanController {
         });
 
         DiskCleanApplicationCleanBtn.setOnMouseClicked(event -> {
-            try{
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/dev/optiboost/fxml/disk-clean-application.fxml"));
-                Parent root = fxmlLoader.load();
-
-                Stage newStage = new Stage();
-                newStage.initStyle(StageStyle.TRANSPARENT);
-                newStage.setTitle("应用程序清理");
-                newStage.setScene(new javafx.scene.Scene(root, 800, 600));
-
-                newStage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            goToDiskCleanInnerPage("应用程序清理", "application");
         });
+
+        DiskCleanDownloadBtn.setOnMouseClicked(event -> {
+            goToDiskCleanInnerPage("下载文件清理", "download");
+        });
+    }
+
+    private void goToDiskCleanInnerPage(String title, String message){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/dev/optiboost/fxml/disk-clean-inner.fxml"));
+            Parent root = fxmlLoader.load();
+            DiskCleanInnerController controller = fxmlLoader.getController();
+            controller.setMessage(message);
+
+            Stage newStage = new Stage();
+            newStage.initStyle(StageStyle.TRANSPARENT);
+            newStage.setTitle(title);
+            Scene scene = new javafx.scene.Scene(root, 800, 600);
+            scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+            newStage.setScene(scene);
+
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addDiskUsageToContainer(DiskUsageNode diskUsageNode) {
@@ -90,7 +103,7 @@ public class DiskCleanController {
         hbox.getChildren().add(region);
 
         // 创建并设置磁盘使用情况的标签
-        Label usageLabel = new Label(diskUsageNode.getUsedSpace() + "GB/" + diskUsageNode.getTotalSpace() + "GB");
+        Label usageLabel = new Label(formatDouble(diskUsageNode.getUsedSpace()) + "GB/" + formatDouble(diskUsageNode.getTotalSpace()) + "GB");
         usageLabel.setStyle("-fx-alignment: CENTER_RIGHT;");
         hbox.getChildren().add(usageLabel);
 

@@ -21,7 +21,7 @@ public class DiskCleanPathList {
             new String[]{
 //                    "C:/Windows/SoftwareDistribution/DeliveryOptimization",
                     "C:/Windows/SoftwareDistribution/DataStore",
-                    "C:/Windows/SoftwareDistribution/Download"
+//                    "C:/Windows/SoftwareDistribution/Download"
             }
     );
 
@@ -150,23 +150,29 @@ public class DiskCleanPathList {
                 inetCacheNode,
                 werNode,
                 recycleBinNode,
-                edgeDownloadNode,
-                chromeDownloadNode
+                chromeDownloadNode,
+                edgeDownloadNode
+
         );
     }
 
     public static List<DiskPathNode> getTempPaths() {
         return List.of(
-                tempNode
+                tempNode,
+                explorerNode
         );
     }
 
     public static List<DiskPathNode> getDownloadPaths() {
         return List.of(
-                explorerNode,
+                inetCacheNode,
                 edgeDownloadNode,
                 chromeDownloadNode,
                 defaultDownloadNode
         );
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getChromeDownloadPath());
     }
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 
 <?import javafx.geometry.Insets?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:id="topBar" alignment="CENTER_RIGHT" style="-fx-background-color: #e6f3fd; -fx-background-radius: 10px 10px; -fx-pref-height: 40px;" fx:controller="org.dev.optiboost.Controller.TopBarController">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:id="topBar" alignment="CENTER_RIGHT" style="-fx-background-color: #e6f3fd; -fx-background-radius: 10px 10px; -fx-pref-height: 40px;" fx:controller="org.dev.optiboost.Controller.TopBarController" stylesheets="@../../styles/top-bar.css">
     <padding>
         <Insets left="10"/>
     </padding>

@@ -1,0 +1,17 @@
+.close-button {
+    -fx-cursor: hand;
+    -fx-background-radius: 0 10px 0 0;
+}
+
+.minimize-button {
+    -fx-cursor: hand;
+}
+
+.close-button:hover {
+    -fx-background-color: #E74C3C;
+
+}
+
+.minimize-button:hover {
+    -fx-background-color: white;
+}

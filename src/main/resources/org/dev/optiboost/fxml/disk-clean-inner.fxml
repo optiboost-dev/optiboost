@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.dev.optiboost.Controller.DiskCleanInnerController"
+            style="-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #f0f0f0; -fx-border-width: 1px;"
+            stylesheets="@../styles/disk-clean-inner.css">
+    <top>
+        <fx:include source="common/top_bar.fxml" />
+    </top>
+
+    <left>
+        <VBox fx:id="navBar" alignment="TOP_RIGHT" style="-fx-background-color: #e6f3fd; -fx-background-radius: 0 0 0 10px;" spacing="5">
+            <Button fx:id="downloadFileCleanButton" onAction="#loadDownloadFileCleanPage" styleClass="nav-button">
+                <graphic>
+                    <VBox spacing="5" alignment="CENTER">
+                        <padding>
+                            <Insets top="5" bottom="5"/>
+                        </padding>
+                        <ImageView fx:id="navIcon1" fitWidth="20" fitHeight="20">
+                            <Image url="@../assets/DownloadFileIcon.png" />
+                        </ImageView>
+                        <Label text="下载文件"/>
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button fx:id="applicationCleanButton" onAction="#loadApplicationCleanPage" styleClass="nav-button">
+                <graphic>
+                    <VBox spacing="5" alignment="CENTER">
+                        <padding>
+                            <Insets top="5" bottom="5"/>
+                        </padding>
+                        <ImageView fx:id="navIcon2" fitWidth="20" fitHeight="20">
+                            <Image url="@../assets/ApplicationCleanIcon.png" />
+                        </ImageView>
+                        <Label text="应用清理"/>
+                    </VBox>
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="content" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 10px 0"/>
+    </center>
+
+</BorderPane>

@@ -12,6 +12,7 @@
 .nav-selected {
     -fx-border-color: #005fb8;
     -fx-border-width: 0 0 0 3px;
+
 }
 
 .nav-selected Label {
