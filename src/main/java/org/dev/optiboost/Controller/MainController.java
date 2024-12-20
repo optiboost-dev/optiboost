@@ -111,9 +111,21 @@ public class MainController {
     }
 
     @FXML
-    protected void loadMonitorPage(ActionEvent event) {
-        if(navigationIndex == 3) return;
+    protected void loadMonitorPage(javafx.event.ActionEvent event) {
+        if (navigationIndex == 3) return;
         setNavigationIndex(3);
-        loadScreen("/org/dev/optiboost/fxml/monitor.fxml");
+        try {
+            // 使用FXMLLoader加载monitor.fxml文件并获取对应MonitorController实例
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/dev/optiboost/fxml/monitor.fxml"));
+            Node screen = loader.load();
+            MonitorController monitorController = loader.getController();
+
+            // 调用MonitorController的方法来设置图表数据
+            monitorController.setupMonitorScene();
+
+            content.getChildren().setAll(screen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
