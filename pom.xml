@@ -57,6 +57,21 @@
             <artifactId>charts</artifactId>
             <version>21.0.21</version>
         </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.9.0</version> <!-- 使用最新版本 -->
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.9.0</version> <!-- 使用最新版本 -->
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>21</version> <!-- 使用适合您Java版本的JavaFX版本 -->
+        </dependency>
     </dependencies>
 
     <build>

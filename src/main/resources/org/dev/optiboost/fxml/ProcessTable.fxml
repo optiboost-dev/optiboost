@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dev.optiboost.Controller.ProcessTableController">
+    <TableView fx:id="processTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="selectColumn" prefWidth="50" />
+            <TableColumn fx:id="iconColumn" prefWidth="100" />
+            <TableColumn fx:id="nameColumn" prefWidth="200" />
+            <TableColumn fx:id="memoryColumn" prefWidth="100" />
+        </columns>
+    </TableView>
+    <HBox alignment="CENTER">
+        <Button text="结束进程" onAction="#endProcesses" />
+    </HBox>
+</VBox>
