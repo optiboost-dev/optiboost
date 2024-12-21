@@ -5,16 +5,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dev.optiboost.Controller.ProcessTableController">
-    <TableView fx:id="processTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="selectColumn" prefWidth="50" />
-            <TableColumn fx:id="iconColumn" prefWidth="100" />
-            <TableColumn fx:id="nameColumn" prefWidth="200" />
-            <TableColumn fx:id="memoryColumn" prefWidth="100" />
-        </columns>
-    </TableView>
-    <HBox alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.ProcessTableController">
+    <VBox alignment="center">
+        <VBox alignment="center" fx:id="loading">
+            <fx:include source="common/loading.fxml" />
+        </VBox>
+
+        <TableView fx:id="processTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="selectColumn" prefWidth="50" />
+                <TableColumn fx:id="iconColumn" prefWidth="100" />
+                <TableColumn fx:id="nameColumn" prefWidth="200" />
+                <TableColumn fx:id="memoryColumn" prefWidth="100" />
+            </columns>
+        </TableView>
+    </VBox>
+
+    <HBox alignment="CENTER" style="-fx-padding: 10px 0 10px 0">
         <Button text="结束进程" onAction="#endProcesses" />
     </HBox>
 </VBox>

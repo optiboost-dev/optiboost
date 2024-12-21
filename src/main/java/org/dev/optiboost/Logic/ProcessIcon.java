@@ -10,18 +10,27 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class ProcessIcon {
-    public Image getImageByProcessname(String processname){
+    public Image getImageByProcessname(String processname) throws IOException {
         String url = getProcessPathByName(processname);
         if (url == null) return null;
         File file1 = new File(url);
         if (!file1.exists()) {
             return null;
         }
-
+        Image image;
         // 获取系统图标
-        Image image = ((ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(file1)).getImage();
+        try{
+            image = ((ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(file1)).getImage();
+
+        }catch (Exception e){
+            // 如果获取系统图标失败，使用默认图标
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/org/dev/optiboost/assets/process.png")));
+        }
+
+
         return image;
     }
 

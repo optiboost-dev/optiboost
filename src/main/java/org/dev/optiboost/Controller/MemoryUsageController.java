@@ -1,5 +1,7 @@
 package org.dev.optiboost.Controller;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import org.dev.optiboost.Logic.MemoryShowLogic;
+import org.dev.optiboost.Logic.MonitorLogic;
+import org.dev.optiboost.Utils;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MemoryUsageController {
 
@@ -17,24 +25,29 @@ public class MemoryUsageController {
     @FXML
     private Label memoryUsageLabel;
 
-    MemoryShowLogic memoryShowLogic;
 
     // 初始化方法，可以在这里设置初始值或添加事件监听器等
     public void initialize() {
-        memoryShowLogic = new MemoryShowLogic();
-        // 假设这里获取了实际的内存使用情况
-        double usedMemory = memoryShowLogic.getUsedMemory(); // 已用内存
-        double totalMemory = memoryShowLogic.getTotalMemory(); // 总内存
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+        // 每10秒调用一次 updateProgress
+        scheduler.scheduleAtFixedRate(() -> Platform.runLater(this::updateProgress), 0, 3, TimeUnit.SECONDS);
+
+    }
+
+    public void updateProgress() {
+        double usedMemory = MonitorLogic.getMemoryUsage(); // 已用内存
+        double totalMemory = MonitorLogic.getWholeMemory(); // 总内存
         double progress = usedMemory / totalMemory; // 计算进度
 
-        String usedMemoryGB = String.format("%.2f", (double) usedMemory / 1024 / 1024 / 1024);
-        String totalMemoryGB = String.format("%.2f", (double) totalMemory / 1024 / 1024 / 1024);
-
+        String usedMemoryGB = Utils.calculateSize(usedMemory);
+        String totalMemoryGB = Utils.calculateSize(totalMemory);
 
         // 更新进度条和标签
         progressBar.setProgress(progress);
-        memoryUsageLabel.setText("已用内存/总内存：" +usedMemoryGB + "GB/" + totalMemoryGB + "GB");
+        memoryUsageLabel.setText("已用内存/总内存：" +usedMemoryGB + "/" + totalMemoryGB);
     }
+
 
     @FXML
     private void goToProcessTable() {

@@ -16,4 +16,5 @@ module org.dev.optiboost {
     exports org.dev.optiboost;
     exports org.dev.optiboost.Controller;
     opens org.dev.optiboost.Controller to javafx.fxml;
+    opens org.dev.optiboost.entity to javafx.base;
 }

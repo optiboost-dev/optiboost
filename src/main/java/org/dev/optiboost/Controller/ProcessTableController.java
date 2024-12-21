@@ -2,6 +2,7 @@ package org.dev.optiboost.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -11,6 +12,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.dev.optiboost.Logic.MemoryCleanLogic;
 import org.dev.optiboost.Logic.MemoryShowLogic;
@@ -22,6 +24,8 @@ import java.util.List;
 
 public class ProcessTableController {
     @FXML
+    public VBox loading;
+    @FXML
     private TableView<ProcessData> processTable;
     @FXML
     private TableColumn<ProcessData, Boolean> selectColumn;
@@ -32,13 +36,13 @@ public class ProcessTableController {
     @FXML
     private TableColumn<ProcessData, String> memoryColumn;
 
+
+
     private ObservableList<ProcessData> processDataList = FXCollections.observableArrayList();
 
 
     public void initialize() {
 
-        MemoryShowLogic memoryShowLogic = new MemoryShowLogic();
-        List<ProcessInfo> memoryInfo = memoryShowLogic.getMemoryInfo();
         // 设置选择列
         selectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(selectColumn));
@@ -57,7 +61,32 @@ public class ProcessTableController {
         //processDataList.add(new ProcessData(null, "进程图标", "进程名称", "占用内存"));
 
         // 添加数据
-        for (int i = 1; i <= 10; i++) {
+        memoryTask();
+
+    }
+
+    private void memoryTask(){
+        Task<List<ProcessInfo>> getMemoryInfoTask = new Task<>() {
+            @Override
+            protected List<ProcessInfo> call() {
+                processTable.setVisible(false);
+                loading.setVisible(true);
+                loading.setMaxHeight(400);
+                return MemoryShowLogic.getMemoryInfo();
+            }
+        };
+
+        getMemoryInfoTask.setOnSucceeded(event -> {
+            List<ProcessInfo> memoryInfo = getMemoryInfoTask.getValue();
+            initProcessTable(memoryInfo);
+        });
+
+        new Thread(getMemoryInfoTask).start();
+    }
+
+    private void initProcessTable(List<ProcessInfo> memoryInfo) {
+        processDataList.clear();
+        for (int i = 1; i <= 20; i++) {
             ProcessData processData = new ProcessData(memoryInfo.get(memoryInfo.size() - i));
             Image icon = processData.getIcon(); // 传入的参数
             String name = processData.getName(); // 传入的参数
@@ -67,6 +96,9 @@ public class ProcessTableController {
 
         processTable.setItems(processDataList);
         processTable.setEditable(true);
+        loading.setVisible(false);
+        loading.setMaxHeight(0);
+        processTable.setVisible(true);
     }
 
     @FXML
@@ -74,6 +106,7 @@ public class ProcessTableController {
         processDataList.stream()
                 .filter(ProcessData::isSelected)
                 .forEach(data -> endProcess(data.getName()));
+        memoryTask();
     }
 
     private void endProcess(String processName) {

@@ -12,12 +12,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MonitorLogic {
     public static final int UPDATE_INTERVAL = 1000; // 数据更新间隔，单位毫秒
+    public static final TimeUnit TIME_UNIT = TimeUnit.MILLISECONDS; // 时间单位
     private static final SystemInfo si = new SystemInfo();
     private static final HardwareAbstractionLayer hal = si.getHardware();
-    private static final CentralProcessor cpu = hal.getProcessor();
     private static final OperatingSystem os = si.getOperatingSystem();
     public static double getCpuUsage() {
         try {
