@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MonitorLogic {
-    public static final int UPDATE_INTERVAL = 1000; // 数据更新间隔，单位毫秒
+    public static final int UPDATE_INTERVAL = 500; // 数据更新间隔，单位毫秒
     public static final TimeUnit TIME_UNIT = TimeUnit.MILLISECONDS; // 时间单位
     private static final SystemInfo si = new SystemInfo();
     private static final HardwareAbstractionLayer hal = si.getHardware();
@@ -66,6 +66,35 @@ public class MonitorLogic {
         return -1;
     }
 
+    public static double getGPUUsage(){
+        try {
+            // 创建ProcessBuilder并指定nvidia-smi命令
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"
+            );
+            // 启动进程
+            Process process = processBuilder.start();
+
+            // 读取进程输出
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // 去掉空格并解析为浮点数
+                    return Double.parseDouble(line.trim());
+                }
+            }
+
+            // 等待进程完成并检查退出码
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                System.err.println("Error occurred while executing command, exit code: " + exitCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static double getMemoryUsage() {
         long totalMemory = hal.getMemory().getTotal();
         long availableMemory = hal.getMemory().getAvailable();
@@ -104,6 +133,7 @@ public class MonitorLogic {
 
     public static void main(String[] args) {
         System.out.println(getCpuUsage());
+        System.out.println(getGPUUsage());
         System.out.println(Utils.calculateSize(getMemoryUsage()));
         System.out.println(Utils.calculateSize(getWholeMemory()));
         System.out.println(Utils.calculateSize(getDiskUsage()));

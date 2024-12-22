@@ -11,60 +11,83 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ScrollPane?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.MonitorController" stylesheets="@../styles/common.css">
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/common.css" fx:controller="org.dev.optiboost.Controller.MonitorController">
     <!-- 使用Insets构造函数设置padding -->
     <VBox style="-fx-pref-width: 360px">
         <padding>
             <Insets top="10" right="10" bottom="10" left="10"/>
         </padding>
 
-        <HBox alignment="CENTER">
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="10" alignment="CENTER">
+        <HBox alignment="TOP_CENTER">
+            <VBox spacing="10" alignment="TOP_CENTER" maxWidth="120" prefWidth="120">
                 <Label text="CPU" style="-fx-font-size: 14px;"/>
-                <StackPane>
-                    <Circle fx:id="cpuBackgroundCircle" radius="60" fill="lightgray"/>
-                    <Arc fx:id="cpuArc" radiusX="50" radiusY="50" startAngle="90" length="0"
-                         type="ROUND" fill="blue" stroke="transparent"/>
-                </StackPane>
+                <Pane prefWidth="120" prefHeight="120">
+                    <Circle radius="60" fill="lightgray" layoutX="60" layoutY="60"/>
+                    <Arc fx:id="cpuArc" radiusX="60" radiusY="60" startAngle="90"
+                         type="ROUND" fill="#005fb8" stroke="transparent" centerX="60" centerY="60"/>
+                </Pane >
                 <VBox spacing="5" alignment="CENTER">
                     <Text fx:id="cpuPercentageText" text="0.0%" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <Text fx:id="cpuDataText" text="0.0/100.0" style="-fx-font-size: 12px;"/>
                 </VBox>
             </VBox>
 
+            <Region prefWidth="80" />
+            <VBox spacing="10" alignment="CENTER" maxWidth="120" prefWidth="120">
+                <Label text="GPU" style="-fx-font-size: 14px;"/>
+                <Pane prefWidth="120" prefHeight="120">
+                    <!-- 背景圆圈 -->
+                    <Circle radius="60" fill="lightgray" layoutX="60" layoutY="60"/>
+                    <!-- 计算进度条的Arc -->
+                    <Arc fx:id="gpuArc" radiusX="60" radiusY="60" startAngle="90"
+                         type="ROUND" fill="#005fb8" stroke="transparent" centerX="60" centerY="60">
+                    </Arc>
+                </Pane>
+
+                <VBox spacing="5" alignment="CENTER">
+                    <Text fx:id="gpuPercentageText" text="0.0%" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <Text fx:id="gpuDataText" text="0.0/100.0" style="-fx-font-size: 12px;"/>
+                </VBox>
+            </VBox>
+
+
+        </HBox>
+
+        <HBox alignment="TOP_CENTER" style="-fx-padding: 40px 0 0 0">
             <!-- Memory Section -->
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" spacing="10" alignment="CENTER">
+            <VBox spacing="10" alignment="TOP_CENTER" maxWidth="120" prefWidth="120">
                 <Label text="内存" style="-fx-font-size: 14px;"/>
-                <StackPane>
-                    <Circle fx:id="memoryBackgroundCircle" radius="60" fill="lightgray"/>
-                    <Arc fx:id="memoryArc" radiusX="50" radiusY="50" startAngle="90" length="0"
-                         type="ROUND" fill="green" stroke="transparent"/>
-                </StackPane>
+                <Pane prefWidth="120" prefHeight="120">
+                    <Circle radius="60" fill="lightgray" layoutX="60" layoutY="60"/>
+                    <Arc fx:id="memoryArc" radiusX="60" radiusY="60" startAngle="90"
+                         type="ROUND" fill="#005fb8" stroke="transparent"  centerX="60" centerY="60"/>
+                </Pane>
                 <VBox spacing="5" alignment="CENTER">
                     <Text fx:id="memoryPercentageText" text="0.0%" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <Text fx:id="memoryDataText" text="0.0/100.0" style="-fx-font-size: 12px;"/>
                 </VBox>
             </VBox>
-        </HBox>
 
-        <HBox alignment="CENTER">
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="2" spacing="10" alignment="CENTER">
+
+            <Region prefWidth="80" />
+            <VBox spacing="10" alignment="TOP_CENTER" maxWidth="120" prefWidth="120">
                 <Label text="磁盘" style="-fx-font-size: 14px;"/>
-                <StackPane>
+                <Pane prefWidth="120" prefHeight="120">
                     <!-- 背景圆圈 -->
-                    <Circle fx:id="diskBackgroundCircle" radius="60" fill="lightgray"/>
-
+                    <Circle radius="60" fill="lightgray" layoutX="60" layoutY="60"/>
                     <!-- 计算进度条的Arc -->
-                    <Arc fx:id="diskArc" radiusX="50" radiusY="50" startAngle="90" length="0"
-                         type="ROUND" fill="orange" stroke="transparent" translateX="0" translateY="0">
+                    <Arc fx:id="diskArc" radiusX="60" radiusY="60" startAngle="90"
+                         type="ROUND" fill="#005fb8" stroke="transparent" centerX="60" centerY="60">
                     </Arc>
-                </StackPane>
-
+                </Pane>
                 <VBox spacing="5" alignment="CENTER">
                     <Text fx:id="diskPercentageText" text="0.0%" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <Text fx:id="diskDataText" text="0.0/100.0" style="-fx-font-size: 12px;"/>
                 </VBox>
             </VBox>
+
         </HBox>
 
     </VBox>
