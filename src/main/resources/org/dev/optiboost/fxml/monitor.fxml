@@ -13,7 +13,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/common.css" fx:controller="org.dev.optiboost.Controller.MonitorController">
+<ScrollPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/common.css" fx:controller="org.dev.optiboost.Controller.MonitorController" style="-fx-background-radius: 0 0 10px 0">
     <!-- 使用Insets构造函数设置padding -->
     <VBox style="-fx-pref-width: 360px">
         <padding>

@@ -12,7 +12,8 @@
             fx:controller="org.dev.optiboost.Controller.DiskCleanApplicationController"
             prefHeight="550.0" prefWidth="720.0"
             fx:id="diskCleanApplicationContainer"
-            stylesheets="@../styles/common.css,@../styles/disk-clean-application.css">
+            stylesheets="@../styles/common.css,@../styles/disk-clean-application.css"
+style="-fx-background-radius: 0 0 10px 0">
     <VBox spacing="10" prefWidth="720" prefHeight="550">
         <!-- Dropdown for Sort by -->
         <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10px">
@@ -44,7 +45,7 @@
             </HBox>
             <!-- Dropdown for Filter Condition -->
             <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="searchButton" alignment="CENTER" text="搜索" styleClass="search-button"/>
+            <Label fx:id="searchButton" alignment="CENTER" text="应用" styleClass="search-button"/>
         </HBox>
 
         <VBox fx:id="diskCleanApplicationMainPart" alignment="TOP_CENTER" />
