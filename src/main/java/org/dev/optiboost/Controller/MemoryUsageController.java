@@ -6,9 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
+import org.dev.optiboost.Logic.DiskCleanLogic;
 import org.dev.optiboost.Logic.MemoryShowLogic;
 import org.dev.optiboost.Logic.MonitorLogic;
 import org.dev.optiboost.Utils;
@@ -20,10 +22,10 @@ import java.util.concurrent.TimeUnit;
 public class MemoryUsageController {
 
     @FXML
-    private ProgressBar progressBar;
+    private ProgressBar memoryProgressBar;
 
     @FXML
-    private Label memoryUsageLabel;
+    private Label memoryUsageLabel, tempUsageLabel;
 
 
     // 初始化方法，可以在这里设置初始值或添加事件监听器等
@@ -39,13 +41,45 @@ public class MemoryUsageController {
         double usedMemory = MonitorLogic.getMemoryUsage(); // 已用内存
         double totalMemory = MonitorLogic.getWholeMemory(); // 总内存
         double progress = usedMemory / totalMemory; // 计算进度
+        double tempFileSize = DiskCleanLogic.getTempFilesSize();
 
         String usedMemoryGB = Utils.calculateSize(usedMemory);
         String totalMemoryGB = Utils.calculateSize(totalMemory);
 
         // 更新进度条和标签
-        progressBar.setProgress(progress);
-        memoryUsageLabel.setText("已用内存/总内存：" +usedMemoryGB + "/" + totalMemoryGB);
+        memoryProgressBar.setProgress(progress);
+        memoryUsageLabel.setText(String.format("%.2f%%", progress * 100));
+        tempUsageLabel.setText(Utils.calculateSize(tempFileSize));
+    }
+
+    @FXML
+    private void cleanTempFiles() {
+        try{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("清理临时文件");
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    return DiskCleanLogic.cleanTempFiles();
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                if (task.getValue()) {
+                    alert.setHeaderText("清理成功");
+                } else {
+                    alert.setHeaderText("清理失败");
+                }
+                alert.showAndWait();
+            });
+
+            new Thread(task).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

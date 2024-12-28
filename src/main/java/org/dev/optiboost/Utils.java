@@ -3,15 +3,18 @@ package org.dev.optiboost;
 import java.text.DecimalFormat;
 
 public class Utils {
-    public static String calculateSize(Double size){
-        if(size < 1024){
-            return String.format("%.2f B", size);
-        }else if(size < 1024 * 1024){
-            return String.format("%.2f KB", size / 1024);
-        }else if(size < 1024 * 1024 * 1024){
-            return String.format("%.2f MB", size / 1024 / 1024);
-        }else{
-            return String.format("%.2f GB", size / 1024 / 1024 / 1024);
+    public static String calculateSize(Double size) {
+        if (size < 1024) {
+            return String.format(size % 1 == 0 ? "%.0f B" : "%.2f B", size);
+        } else if (size < 1024 * 1024) {
+            double kb = size / 1024;
+            return String.format(kb % 1 == 0 ? "%.0f KB" : "%.2f KB", kb);
+        } else if (size < 1024 * 1024 * 1024) {
+            double mb = size / 1024 / 1024;
+            return String.format(mb % 1 == 0 ? "%.0f MB" : "%.2f MB", mb);
+        } else {
+            double gb = size / 1024 / 1024 / 1024;
+            return String.format(gb % 1 == 0 ? "%.0f GB" : "%.2f GB", gb);
         }
     }
 
@@ -31,5 +34,9 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showAlert(String 清理成功, String s) {
+
     }
 }
