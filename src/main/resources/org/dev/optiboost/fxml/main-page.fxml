@@ -44,7 +44,7 @@
         <HBox alignment="CENTER_LEFT">
             <!-- Memory Usage Section -->
             <HBox alignment="CENTER" maxWidth="120">
-                <ProgressBar fx:id="memoryProgressBar" maxHeight="10" maxWidth="40" style="-fx-accent: #003e92;">
+                <ProgressBar fx:id="memoryProgressBar" maxHeight="10" maxWidth="40" style="-fx-accent: #005fb8;">
                     <rotate>270</rotate>
                 </ProgressBar>
                 <VBox alignment="CENTER" spacing="5.0" style="-fx-padding: 0;">
@@ -59,7 +59,7 @@
                     <rotate>270</rotate>
                 </ProgressBar>
                 <VBox alignment="CENTER" spacing="5.0">
-                    <Label fx:id="tempUsageLabel" text="141MB" style="-fx-font-size: 16px; -fx-text-fill: #005fb8;"/>
+                    <Label fx:id="tempUsageLabel" text="141MB" style="-fx-font-size: 16px; -fx-text-fill: #003e92;"/>
                     <Label text="临时文件" style="-fx-font-size: 14px; -fx-text-fill: #888888;"/>
                 </VBox>
             </HBox>
