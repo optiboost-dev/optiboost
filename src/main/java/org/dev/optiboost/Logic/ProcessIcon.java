@@ -1,5 +1,7 @@
 package org.dev.optiboost.Logic;
 
+import org.dev.optiboost.Utils;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -13,26 +15,31 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class ProcessIcon {
-    public Image getImageByProcessname(String processname) throws IOException {
+    public BufferedImage getImageByProcessname(String processname) throws IOException {
         String url = getProcessPathByName(processname);
         if (url == null) return null;
+
         File file1 = new File(url);
         if (!file1.exists()) {
             return null;
         }
-        Image image;
+
+        BufferedImage image;
         // 获取系统图标
-        try{
-            image = ((ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(file1)).getImage();
-
-        }catch (Exception e){
+        try {
+            // 获取 AWT 的系统图标
+            java.awt.Image awtImage = ((ImageIcon) FileSystemView.getFileSystemView().getSystemIcon(file1)).getImage();
+            // 将 java.awt.Image 转换为 BufferedImage
+            image = Utils.toBufferedImage(awtImage);
+        } catch (Exception e) {
             // 如果获取系统图标失败，使用默认图标
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/org/dev/optiboost/assets/process.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/org/dev/optiboost/assets/Process.png")));
         }
-
 
         return image;
     }
+
+
 
     public String getProcessPathByName(String processName) {
         try {

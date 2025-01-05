@@ -20,16 +20,16 @@ public class ProcessData {
 
     public ProcessData(ProcessInfo processInfo) {
 
-        BufferedImage bufferedImage = new BufferedImage(processInfo.image.getWidth(null), processInfo.image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bufferedImage = new BufferedImage(processInfo.getImage().getWidth(null), processInfo.getImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.drawImage(processInfo.image, 0, 0, null);
+        g2d.drawImage(processInfo.getImage(), 0, 0, null);
         g2d.dispose();
 
 // 使用SwingFXUtils将BufferedImage转换为JavaFX的Image
         Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
         this.icon.set(fxImage);
-        this.name.set(processInfo.name);
-        this.memory.set(processInfo.memoryUsage / 1024   + "MB"); // 假设内存使用量以KB为单位
+        this.name.set(processInfo.getName());
+        this.memory.set(processInfo.getMemoryUsage() / 1024   + "MB"); // 假设内存使用量以KB为单位
     }
 
     public ProcessData(String name, Image icon, String memory) {

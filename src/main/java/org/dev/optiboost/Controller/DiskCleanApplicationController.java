@@ -42,7 +42,6 @@ public class DiskCleanApplicationController {
     @FXML
     public void initialize() {
         try {
-            System.out.println("DiskCleanApplicationController initialize");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/dev/optiboost/fxml/common/loading.fxml"));
             Parent load = loader.load();
             VBox loading;

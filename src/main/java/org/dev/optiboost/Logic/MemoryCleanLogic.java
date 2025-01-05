@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MemoryCleanLogic {
-    public void killProcess(String processName) {
+    public static void killProcess(String processName) {
             String cmd = "taskkill /IM " + processName + " /F";
             try {
                 Process process = Runtime.getRuntime().exec(cmd);

@@ -23,20 +23,20 @@
         <VBox fx:id="navBar" alignment="TOP_RIGHT" style="-fx-background-color: #e6f3fd; -fx-background-radius: 0 0 0 10px;" spacing="5">
             <Button fx:id="memoryCleanButton" onAction="#loadMemoryCleanPage" styleClass="nav-button">
                 <graphic>
-                    <VBox spacing="5" alignment="CENTER">
+                    <VBox spacing="5" alignment="CENTER" prefWidth="50">
                         <padding>
                             <Insets top="5" bottom="5"/>
                         </padding>
                         <ImageView fx:id="navIcon1" fitWidth="20" fitHeight="20">
-                            <Image url="@../assets/MemoryCleanIcon.png" />
+                            <Image url="@../assets/HomeIcon.png" />
                         </ImageView>
-                        <Label text="内存清理"/>
+                        <Label text="首页"/>
                     </VBox>
                 </graphic>
             </Button>
             <Button fx:id="diskCleanButton" onAction="#loadDiskCleanPage" styleClass="nav-button">
                 <graphic>
-                    <VBox spacing="5" alignment="CENTER">
+                    <VBox spacing="5" alignment="CENTER" prefWidth="50">
                         <padding>
                             <Insets top="5" bottom="5"/>
                         </padding>
@@ -49,7 +49,7 @@
             </Button>
             <Button fx:id="monitorButton" onAction="#loadMonitorPage" styleClass="nav-button">
                 <graphic>
-                    <VBox spacing="5" alignment="CENTER">
+                    <VBox spacing="5" alignment="CENTER" prefWidth="50">
                         <padding>
                             <Insets top="5" bottom="5"/>
                         </padding>
@@ -57,6 +57,32 @@
                             <Image url="@../assets/MonitorIcon.png" />
                         </ImageView>
                         <Label text="实时监控"/>
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button fx:id="processManagementButton" onAction="#loadProcessManagementPage" styleClass="nav-button">
+                <graphic>
+                    <VBox spacing="5" alignment="CENTER" prefWidth="50">
+                        <padding>
+                            <Insets top="5" bottom="5"/>
+                        </padding>
+                        <ImageView fx:id="navIcon4" fitWidth="20" fitHeight="20">
+                            <Image url="@../assets/ProcessManagementIcon.png" />
+                        </ImageView>
+                        <Label text="进程管理"/>
+                    </VBox>
+                </graphic>
+            </Button>
+            <Button fx:id="startUpManagementButton" onAction="#loadStartUpManagementPage" styleClass="nav-button">
+                <graphic>
+                    <VBox spacing="5" alignment="CENTER" prefWidth="50">
+                        <padding>
+                            <Insets top="5" bottom="5"/>
+                        </padding>
+                        <ImageView fx:id="navIcon5" fitWidth="20" fitHeight="20">
+                            <Image url="@../assets/StartUpIcon.png" />
+                        </ImageView>
+                        <Label text="启动项"/>
                     </VBox>
                 </graphic>
             </Button>

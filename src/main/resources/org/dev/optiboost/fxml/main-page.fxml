@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Hyperlink?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/memory-clean.css" fx:controller="org.dev.optiboost.Controller.MemoryUsageController" style="-fx-background-color: #f3f9fe; -fx-background-radius: 0 0 10px 0" prefWidth="380">
+    <padding>
+        <Insets top="20" right="20" bottom="10" left="20"/>
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="memory-head-container" fx:id="memoryHeadContainer">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <ImageView fitHeight="30" fitWidth="30">
+            <Image url="@../assets/QuestionIcon.png"/>
+        </ImageView>
+        <VBox alignment="CENTER_LEFT" spacing="3">
+            <Text text="为什么没有一键加速功能？" style="-fx-font-size: 14px; -fx-text-fill: #333333;"/>
+            <Text text="它可能并没有你想象的那么有效" style="-fx-font-size: 12px" fill="#aaaaaa" />
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS" />
+        <ImageView fitHeight="18" fitWidth="18">
+            <Image url="@../assets/LinkIcon.png"/>
+        </ImageView>
+    </HBox>
+
+    <VBox alignment="CENTER_LEFT" styleClass="memory-fasy-container" spacing="10">
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <!-- Title Section -->
+            <Label text="清理临时文件" style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
+            <Label text="监控内存，清理临时文件，减少电脑卡顿" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+        </VBox>
+        <HBox alignment="CENTER_LEFT">
+            <!-- Memory Usage Section -->
+            <HBox alignment="CENTER" maxWidth="120">
+                <ProgressBar fx:id="memoryProgressBar" maxHeight="10" maxWidth="40" style="-fx-accent: #003e92;">
+                    <rotate>270</rotate>
+                </ProgressBar>
+                <VBox alignment="CENTER" spacing="5.0" style="-fx-padding: 0;">
+                    <Label fx:id="memoryUsageLabel" text="58%" style="-fx-font-size: 16px; -fx-text-fill: #003e92;"/>
+                    <Label text="内存占用" style="-fx-font-size: 14px; -fx-text-fill: #888888;"/>
+                </VBox>
+            </HBox>
+            <Region prefWidth="50" />
+            <!-- Temporary File Section -->
+            <HBox alignment="CENTER" maxWidth="120">
+                <ProgressBar fx:id="tempProgressBar" maxHeight="10" maxWidth="40" style="-fx-accent: #005fb8;">
+                    <rotate>270</rotate>
+                </ProgressBar>
+                <VBox alignment="CENTER" spacing="5.0">
+                    <Label fx:id="tempUsageLabel" text="141MB" style="-fx-font-size: 16px; -fx-text-fill: #005fb8;"/>
+                    <Label text="临时文件" style="-fx-font-size: 14px; -fx-text-fill: #888888;"/>
+                </VBox>
+            </HBox>
+        </HBox>
+        <!-- Accelerate Button -->
+        <HBox alignment="TOP_CENTER" spacing="10">
+            <Button fx:id="tempFileCleanBtn" text="清理临时文件" style="-fx-font-size: 16px; -fx-background-color: #005fb8; -fx-text-fill: white; -fx-background-radius: 5px; -fx-padding: 5px 10px 5px 10px; -fx-pref-width: 300px; -fx-cursor: hand" onAction="#cleanTempFiles" />
+<!--            <Button text="深度清理" style="-fx-font-size: 16px; -fx-background-color: #007BFF; -fx-text-fill: white; -fx-background-radius: 5px; -fx-padding: 5px 10px 5px 10px" onAction="#goToProcessTable"/>-->
+        </HBox>
+    </VBox>
+
+    <VBox alignment="CENTER_LEFT" spacing="10">
+        <HBox alignment="CENTER_LEFT" prefWidth="340" prefHeight="100" spacing="10">
+            <VBox styleClass="main-page-option" fx:id="mainProcessManagement">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@../assets/MainProcessManagement.png"/>
+                    </ImageView>
+                    <Text text="进程管理" style="-fx-font-size: 13px; -fx-text-fill: #333333;"/>
+                </HBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <VBox>
+                    <Label text="进行中" styleClass="main-page-option-label" />
+                    <Label fx:id="processManagementValue" text="--" styleClass="main-page-option-value" />
+                </VBox>
+            </VBox>
+            <VBox alignment="CENTER" styleClass="main-page-option" fx:id="mainDiskClean">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@../assets/MainDiskClean.png"/>
+                    </ImageView>
+                    <Text text="深度清理" style="-fx-font-size: 13px; -fx-text-fill: #333333;"/>
+                </HBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <VBox>
+                    <Label text="C盘" styleClass="main-page-option-label" />
+                    <Label fx:id="cDiskUsageValue" text="--" styleClass="main-page-option-value" />
+                </VBox>
+            </VBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefWidth="340" prefHeight="100" spacing="10">
+            <VBox alignment="CENTER" styleClass="main-page-option" fx:id="mainStartUp">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@../assets/StartUpIcon.png"/>
+                    </ImageView>
+                    <Text text="启动项管理" style="-fx-font-size: 13px; -fx-text-fill: #333333;"/>
+                </HBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <VBox>
+                    <Label text="上次开机" styleClass="main-page-option-label" />
+                    <Label fx:id="lastStartUpValue" text="--" styleClass="main-page-option-value" />
+                </VBox>
+            </VBox>
+            <VBox alignment="CENTER" styleClass="main-page-option" fx:id="mainOurProject">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <ImageView fitHeight="20" fitWidth="20">
+                        <Image url="@../assets/github.png"/>
+                    </ImageView>
+                    <Text text="查看本项目" style="-fx-font-size: 13px; -fx-text-fill: #333333;"/>
+                </HBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <VBox>
+                    <Label text="状态" styleClass="main-page-option-label" />
+                    <Label text="已经开源" styleClass="main-page-option-value" />
+                </VBox>
+            </VBox>
+        </HBox>
+
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <Text text="由optiboost-dev小组提供支持" style="-fx-font-size: 12px; " fill="#999999"/>
+</VBox>

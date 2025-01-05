@@ -11,6 +11,8 @@ import oshi.util.Util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -132,11 +134,130 @@ public class MonitorLogic {
     }
 
     public static void main(String[] args) {
-        System.out.println(getCpuUsage());
-        System.out.println(getGPUUsage());
-        System.out.println(Utils.calculateSize(getMemoryUsage()));
-        System.out.println(Utils.calculateSize(getWholeMemory()));
-        System.out.println(Utils.calculateSize(getDiskUsage()));
-        System.out.println(Utils.calculateSize(getDiskTotalSpace()));
+    }
+
+    public static void startMissionManagement() {
+        // 启动windows系统任务管理器
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "cmd.exe", "/c",
+                    "taskmgr"
+            );
+            processBuilder.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getCPUTemperature(){
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                "powershell.exe", "((gwmi msacpi_thermalzonetemperature -namespace \"root/wmi\").CurrentTemperature) / 10-273.15"
+        );
+        try {
+            Process process = processBuilder.start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    return (int) Double.parseDouble(line);
+                }
+            }
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                System.err.println("Error occurred while executing command, exit code: " + exitCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int getGPUTemperature() {
+        // 使用 ProcessBuilder 构建命令
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                "nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader"
+        );
+
+        try {
+            // 启动进程
+            Process process = processBuilder.start();
+
+            // 读取命令输出
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // 解析温度值
+                    try {
+                        int temperature = Integer.parseInt(line.trim());
+                        return temperature; // 返回 GPU 温度
+                    } catch (NumberFormatException e) {
+                        System.err.println("Failed to parse temperature: " + line);
+                    }
+                }
+            }
+
+            // 等待进程结束并检查退出码
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                System.err.println("Error occurred while executing command, exit code: " + exitCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 如果发生错误，返回默认值 -1
+        return -1;
+    }
+
+    public static int getProcessCount() {
+        return os.getProcessCount();
+    }
+
+//    获取C盘使用情况
+    public static String getCDiskUsage(){
+//         获取C盘大小
+        long totalDiskSpace = 0;
+        long usedDiskSpace = 0;
+        List<OSFileStore> fileStores = os.getFileSystem().getFileStores();
+        for (OSFileStore store : fileStores) {
+            if(store.getMount().equals("C:\\")){
+                totalDiskSpace = store.getTotalSpace();
+                usedDiskSpace = store.getTotalSpace() - store.getFreeSpace();
+            }
+        }
+        return Utils.calculateSize((double) usedDiskSpace) + "/" + Utils.calculateSize((double) totalDiskSpace);
+    }
+
+    public static List<String> getBasicInfo() {
+        return List.of(
+                getProcessCount() + " 个进程",
+                getCDiskUsage(),
+                getRunningTime()
+        );
+    }
+
+    public static String getRunningTime() {
+        try {
+            // 使用 ProcessBuilder 执行命令
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "systeminfo | find \"系统启动时间\"");
+            builder.redirectErrorStream(true);
+            Process process = builder.start();
+
+            // 读取命令行输出
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "GBK"));
+            String line;
+            if ((line = reader.readLine()) != null) {
+                // 解析启动时间
+                String startTimeStr = line.replace("系统启动时间: ", "").trim();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd, HH:mm:ss");
+                Date startTime = format.parse(startTimeStr);
+
+                // 返回几几年几月几号 几点几分几秒
+                return Utils.getDateToBack(startTime);
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "未知";
     }
 }

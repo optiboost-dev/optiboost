@@ -11,6 +11,7 @@ module org.dev.optiboost {
     requires javafx.graphics;
     requires eu.hansolo.fx.charts;
     requires com.github.oshi;
+    requires java.prefs;
 
     opens org.dev.optiboost to javafx.fxml;
     exports org.dev.optiboost;

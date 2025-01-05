@@ -1,0 +1,39 @@
+.memory-fasy-container{
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.memory-clean-btn{
+
+}
+
+.memory-head-container{
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.main-page-option {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-pref-width: 165;
+    -fx-pref-height: 100;
+}
+
+.main-page-option-label{
+    -fx-text-fill: #aaaaaa;
+    -fx-font-size: 12px;
+}
+
+.main-page-option-value {
+    -fx-text-fill: #003e92;
+    -fx-font-size: 12px;
+}

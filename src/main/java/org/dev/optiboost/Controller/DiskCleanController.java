@@ -100,10 +100,10 @@ public class DiskCleanController {
 
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
-        hbox.setStyle("-fx-padding: 0 32 2 32px;");
+        hbox.setStyle("-fx-padding: 0 22 2 22px;");
 
         // 创建并设置磁盘名称的标签
-        Label diskNameLabel = new Label(diskUsageNode.getDiskName()+":");
+        Label diskNameLabel = new Label(diskUsageNode.getDiskName());
         diskNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         hbox.getChildren().add(diskNameLabel);
 
@@ -124,7 +124,7 @@ public class DiskCleanController {
         ProgressBar progressBar = new ProgressBar();
         double usedPercentage = diskUsageNode.getUsedSpace() / diskUsageNode.getTotalSpace();
         progressBar.setProgress(usedPercentage);
-        progressBar.setStyle("-fx-pref-width: 320px;");
+        progressBar.setStyle("-fx-pref-width: 300px;");
 
         diskUsageItem.getChildren().add(progressBar);
 

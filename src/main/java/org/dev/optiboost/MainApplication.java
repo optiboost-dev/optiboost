@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -17,6 +18,8 @@ public class MainApplication extends Application {
         // 设置无装饰窗口
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Vertical Layout Example");
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/logo.png")));
+        primaryStage.getIcons().add(icon);
         Scene scene = new Scene(root, 450, 650);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);  // 设置 Scene 背景透明
         primaryStage.setScene(scene);

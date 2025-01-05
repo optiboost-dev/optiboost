@@ -6,15 +6,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.dev.optiboost.Logic.DiskCleanLogic;
-import org.dev.optiboost.Logic.MemoryShowLogic;
 import org.dev.optiboost.Logic.MonitorLogic;
 import org.dev.optiboost.Utils;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,11 +27,26 @@ import java.util.concurrent.TimeUnit;
 public class MemoryUsageController {
 
     @FXML
+    public ProgressBar tempProgressBar;
+    @FXML
+    public Button tempFileCleanBtn;
+    @FXML
+    public HBox memoryHeadContainer;
+    @FXML
+    public Label processManagementValue, cDiskUsageValue, lastStartUpValue;
+    @FXML
+    public VBox mainProcessManagement, mainDiskClean, mainStartUp, mainOurProject;
+    @FXML
     private ProgressBar memoryProgressBar;
 
     @FXML
     private Label memoryUsageLabel, tempUsageLabel;
 
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     // 初始化方法，可以在这里设置初始值或添加事件监听器等
     public void initialize() {
@@ -34,7 +54,13 @@ public class MemoryUsageController {
 
         // 每10秒调用一次 updateProgress
         scheduler.scheduleAtFixedRate(() -> Platform.runLater(this::updateProgress), 0, 3, TimeUnit.SECONDS);
-
+        scheduler.scheduleAtFixedRate(() -> Platform.runLater(this::calculateBasic), 0, 10, TimeUnit.SECONDS);
+        calculateBasic();
+        bindJump();
+        memoryHeadContainer.setOnMouseClicked(event -> {
+//            打开链接
+            Utils.openLink("https://blog.csdn.net/paschen/article/details/52829867");
+        });
     }
 
     public void updateProgress() {
@@ -48,16 +74,54 @@ public class MemoryUsageController {
 
         // 更新进度条和标签
         memoryProgressBar.setProgress(progress);
+        tempProgressBar.setProgress(tempFileSize/usedMemory*30);
         memoryUsageLabel.setText(String.format("%.2f%%", progress * 100));
         tempUsageLabel.setText(Utils.calculateSize(tempFileSize));
+    }
+
+    public void calculateBasic(){
+        Task<List<String>> task = new Task<List<String>>() {
+            @Override
+            protected List<String> call() throws Exception {
+                return MonitorLogic.getBasicInfo();
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            List<String> basicInfo = task.getValue();
+            processManagementValue.setText(basicInfo.get(0));
+            cDiskUsageValue.setText(basicInfo.get(1));
+            lastStartUpValue.setText(basicInfo.get(2));
+        });
+
+        new Thread(task).start();
+    }
+
+    public void bindJump(){
+        mainProcessManagement.setOnMouseClicked(event -> {
+            mainController.loadProcessManagementPage();
+        });
+
+        mainDiskClean.setOnMouseClicked(event -> {
+            mainController.loadDiskCleanPage();
+        });
+
+        mainStartUp.setOnMouseClicked(event -> {
+            mainController.loadStartUpManagementPage();
+        });
+
+        mainOurProject.setOnMouseClicked(event -> {
+            Utils.openLink("https://github.com/optiboost-dev/optiboost");
+        });
     }
 
     @FXML
     private void cleanTempFiles() {
         try{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("清理临时文件");
-
+            tempFileCleanBtn.setDisable(true);
+            tempFileCleanBtn.setText("正在清理中...");
+            tempFileCleanBtn.setTextFill(Paint.valueOf("#000000"));
+            tempFileCleanBtn.setBackground(Background.fill(Paint.valueOf("#eeeeee")));
             Task<Boolean> task = new Task<Boolean>() {
                 @Override
                 protected Boolean call() throws Exception {
@@ -65,16 +129,28 @@ public class MemoryUsageController {
                 }
             };
 
-            task.setOnSucceeded(event -> {
-                if (task.getValue()) {
-                    alert.setHeaderText("清理成功");
-                } else {
-                    alert.setHeaderText("清理失败");
+            new Thread(task).start();
+
+            Task<Void> sleepTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Thread.sleep(1000);
+                    return null;
                 }
-                alert.showAndWait();
+            };
+
+            sleepTask.setOnSucceeded(event -> {
+                tempFileCleanBtn.setText("清理临时文件");
             });
 
-            new Thread(task).start();
+            task.setOnSucceeded(event -> {
+                tempFileCleanBtn.setDisable(false);
+                tempFileCleanBtn.setText("清理完成✓");
+                tempFileCleanBtn.setTextFill(Paint.valueOf("#000000"));
+                tempFileCleanBtn.setBackground(Background.fill(Paint.valueOf("#005fb8")));
+                new Thread(sleepTask).start();
+
+            });
 
         } catch (Exception e) {
             e.printStackTrace();

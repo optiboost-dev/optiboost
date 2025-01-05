@@ -8,8 +8,11 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.dev.optiboost.Controller.DiskCleanController"
             stylesheets="@../styles/disk-clean.css,@../styles/common.css" fitToHeight="true" fitToWidth="true" style="-fx-background-radius: 0 0 10px 0;">
     <VBox alignment="TOP_CENTER" spacing="2">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
         <Label text="系统存储空间管理"
-               style="-fx-pref-width: 320px; -fx-max-width: 320px; -fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 15px 0 10px 0"/>
+               style="-fx-pref-width: 340px; -fx-max-width: 320px; -fx-font-size: 20px; -fx-font-weight: normal;"/>
         <VBox styleClass="DiskUsageContainer" alignment="TOP_CENTER">
             <VBox spacing="10" alignment="CENTER" fx:id="diskUsageContainer"/>
         </VBox>
@@ -18,9 +21,9 @@
                styleClass="SubTitle"/>
 
         <!-- 清理按钮区域 -->
-        <VBox alignment="CENTER" spacing="5" style="-fx-pref-width: 300px;">
+        <VBox alignment="CENTER" spacing="5" style="-fx-pref-width: 340px;">
             <VBox.margin>
-                <Insets left="30" right="30"/>
+                <Insets left="10" right="10"/>
             </VBox.margin>
             <!-- 文件清理按钮 -->
             <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10" fx:id="DiskCleanDownloadBtn">
@@ -59,7 +62,7 @@
         <!-- 应用清理按钮 -->
         <VBox alignment="CENTER" spacing="5" style="-fx-pref-width: 300px;">
             <VBox.margin>
-                <Insets left="30" right="30"/>
+                <Insets left="10" right="10"/>
             </VBox.margin>
 
             <HBox alignment="CENTER_LEFT" styleClass="DiskCleanBtn" spacing="10" fx:id="DiskCleanApplicationCleanBtn">

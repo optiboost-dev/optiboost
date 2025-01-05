@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.dev.optiboost.Controller.ProcessManagementController"
+            prefWidth="380" style="-fx-background-radius: 0 0 10px 0;"
+            stylesheets="@../styles/common.css,@../styles/disk-clean-download.css">
+    <VBox spacing="10" alignment="CENTER_LEFT" >
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <Text text="应用进程管理" style="-fx-font-size: 20px; -fx-font-weight: normal; -fx-padding: 0 10px 0 10px"/>
+        <Text text="关闭不用的应用进程，提升设备速度" style="-fx-font-size:12px; -fx-padding: 0 10px 0 10px" fill="#bbbbbb"/>
+        <VBox fx:id="processContainer" alignment="CENTER" style="-fx-padding: 0;" prefWidth="340" />
+    </VBox>
+</ScrollPane>

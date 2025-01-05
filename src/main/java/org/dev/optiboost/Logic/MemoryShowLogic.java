@@ -4,6 +4,7 @@ import com.sun.management.OperatingSystemMXBean;
 import java.awt.Image;
 import org.dev.optiboost.entity.ProcessInfo;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,14 +46,17 @@ public class MemoryShowLogic {
                         if (parts.length < 3) return null;
                         String processName = parts[0];
                         int memoryUsage = Integer.parseInt(parts[parts.length - 2].replace(",", ""));
-                        Image icon = iconCache.computeIfAbsent(processName, name -> getImageSafely(processIcon, name));
-                        if (memoryUsage != -1 && icon != null) {
-                            return new ProcessInfo(icon, processName, memoryUsage);
-                        }
-                        return null;
+                        return new ProcessInfo(null, processName, memoryUsage); // 先不获取图标
                     })
                     .filter(Objects::nonNull)
-                    .sorted(Comparator.comparingInt(processInfo -> processInfo.memoryUsage))
+                    .filter(processInfo -> !isSystemProcess(processInfo.getName())) // 排除系统进程
+                    .sorted(Comparator.comparingDouble(processInfo -> -processInfo.getMemoryUsage())) // 按内存使用量降序排序
+                    .limit(20) // 获取前20个进程
+                    .map(processInfo -> {
+                        // 只对最终的前20个进程获取图标
+                        BufferedImage icon = (BufferedImage) iconCache.computeIfAbsent(processInfo.getName(), name -> getImageSafely(processIcon, name));
+                        return new ProcessInfo(icon, processInfo.getName(), processInfo.getMemoryUsage()*1024);
+                    })
                     .collect(Collectors.toList());
 
             reader.close();
@@ -64,7 +68,19 @@ public class MemoryShowLogic {
         return Collections.emptyList();
     }
 
-    private static Image getImageSafely(ProcessIcon processIcon, String processName) {
+    // 判断是否为系统进程
+    private static boolean isSystemProcess(String processName) {
+        // 常见的系统进程名称
+        String[] systemProcesses = {"System", "svchost.exe", "csrss.exe", "lsass.exe", "wininit.exe", "services.exe", "smss.exe", "explorer.exe"};
+        for (String sysProcess : systemProcesses) {
+            if (processName.equalsIgnoreCase(sysProcess)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static BufferedImage getImageSafely(ProcessIcon processIcon, String processName) {
         try {
             return processIcon.getImageByProcessname(processName);
         } catch (IOException e) {
@@ -77,7 +93,7 @@ public class MemoryShowLogic {
         return str != null && str.endsWith(".exe");
     }
     public static void main(String[] args) {
-        getMemoryInfo();
+        getMemoryInfo().forEach(System.out::println);
     }
 
 }

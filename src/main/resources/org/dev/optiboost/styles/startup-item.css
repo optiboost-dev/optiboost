@@ -1,0 +1,18 @@
+/* 定义开关按钮的样式 */
+.switch-button {
+    -fx-background-color: lightgray;
+    -fx-background-radius: 15px;
+    -fx-pref-width: 60px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 15px;
+    -fx-border-color: transparent;
+    -fx-padding: 2px;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+/* 当开关按钮被选中时的样式 */
+.switch-button:selected {
+    -fx-background-color: #005fb8;
+    -fx-text-fill: white;
+}

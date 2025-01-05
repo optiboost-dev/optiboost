@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<HBox alignment="CENTER_LEFT" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dev.optiboost.Controller.ProcessItemController" spacing="10" style="-fx-background-color: white; -fx-border-width: 1px; -fx-border-color: #eeeeee">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <ImageView fx:id="icon" fitHeight="20" fitWidth="20"/>
+    <VBox alignment="CENTER_LEFT" spacing="5" maxWidth="200">
+        <Text fx:id="name" style="-fx-font-size: 14px;"/>
+        <Text fx:id="size" style="-fx-font-size: 12px;" fill="#aaaaaa" />
+    </VBox>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Button fx:id="action" text="结束进程" style="-fx-background-color: #005fb8; -fx-text-fill: white; -fx-font-size: 12px; -fx-cursor: hand"/>
+</HBox>

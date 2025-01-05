@@ -2,7 +2,12 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/dev/optiboost/Logic/MainDiskClean.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/org/dev/optiboost/assets/StartUpIcon.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/org/dev/optiboost/assets/StartUpIconSelected.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/org/dev/optiboost/assets/github.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/org/dev/optiboost/assets/logo.png" charset="GBK" />
     <file url="PROJECT" charset="GBK" />
   </component>
 </project>
