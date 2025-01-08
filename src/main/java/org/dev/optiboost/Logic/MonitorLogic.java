@@ -151,14 +151,19 @@ public class MonitorLogic {
 
     public static int getCPUTemperature(){
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "powershell.exe", "((gwmi msacpi_thermalzonetemperature -namespace \"root/wmi\").CurrentTemperature) / 10-273.15"
+                "powershell.exe", "((Get-WmiObject msacpi_thermalzonetemperature -namespace \"root/wmi\").CurrentTemperature) / 10-273.15"
         );
         try {
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    return (int) Double.parseDouble(line);
+                    int t = (int) Double.parseDouble(line);
+                    if (t < 0) {
+                        return 0;
+                    }else {
+                        return t;
+                    }
                 }
             }
             int exitCode = process.waitFor();
