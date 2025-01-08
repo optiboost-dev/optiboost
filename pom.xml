@@ -101,31 +101,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>io.github.fvarrui</groupId>
-                <artifactId>javapackager</artifactId>
-                <version>1.7.6</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                        <configuration>
-                            <!-- mandatory -->
-                            <mainClass>org.dev.optiboost.MainApplication</mainClass>
-                            <additionalModules>
-                                <!--  我这里自动生成的精简jre缺少这个模块，运行会报错  -->
-                                <additionalModule>jdk.charsets</additionalModule>
-                            </additionalModules>
-                            <bundleJre>true</bundleJre>
-                            <generateInstaller>true</generateInstaller>
-                            <administratorRequired>true</administratorRequired>
-                            <platform>windows</platform>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
