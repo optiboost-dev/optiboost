@@ -18,7 +18,7 @@ optiboost 是一款操作系统助手工具，专注于提高系统的运行效�
 
 ## 启动方式 🚀
 
-运行 `MainApplication` 即可启动本项目。
+需要在管理员模式下打开IDE，运行 `MainApplication` 即可启动本项目。
 
 ## 技术栈 📚
 
